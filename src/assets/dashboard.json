@@ -71,14 +71,14 @@
 
   "sassEarning": [{
     "name": "This month",
-    "amount": "$2453.35",
-    "revenue": "0.4",
+    "amount": "200hrs",
+    "revenue": "0.7",
     "time": "From previous period",
     "month": "Last month",
-    "previousamount": "$2281.04",
+    "previousamount": "140hrs",
     "series": [{
-      "name": "series1",
-      "data": [31, 40, 36, 51, 49, 72, 69, 56, 68, 82, 68, 76]
+      "name": "AI Commits",
+      "data": [2, 11, 3, 1, 5, 2, 9, 5, 8, 2, 5, 4]
     }]
   }],
 

@@ -110,15 +110,15 @@ export class SaasComponent implements OnInit, AfterViewInit {
         this.sassEarning = [
           {
             name: "This month",
-            amount: "$2007.35",
-            revenue: "0.2",
+            amount: "200hrs",
+            revenue: "0.7",
             time: "From previous period",
             month: "Last month",
-            previousamount: "$784.04",
+            previousamount: "140hrs",
             series: [
               {
-                name: "series1",
-                data: [22, 35, 20, 41, 51, 42, 49, 45, 58, 42, 75, 48],
+                name: "AI commits",
+                data: [2, 11, 3, 1, 5, 2, 9, 5, 8, 2, 5, 4],
               },
             ],
           },
@@ -128,15 +128,15 @@ export class SaasComponent implements OnInit, AfterViewInit {
         this.sassEarning = [
           {
             name: "This month",
-            amount: "$2007.35",
-            revenue: "0.2",
+            amount: "140hrs",
+            revenue: "0.8",
             time: "From previous period",
             month: "Last month",
-            previousamount: "$784.04",
+            previousamount: "112hrs",
             series: [
               {
-                name: "series1",
-                data: [22, 28, 31, 34, 40, 52, 29, 45, 68, 60, 47, 12],
+                name: "AI Commits",
+                data: [2, 8, 3, 4, 10, 5, 9, 4, 6, 6, 7, 2],
               },
             ],
           },
@@ -146,15 +146,15 @@ export class SaasComponent implements OnInit, AfterViewInit {
         this.sassEarning = [
           {
             name: "This month",
-            amount: "$2887.35",
-            revenue: "0.4",
+            amount: "112hrs",
+            revenue: "0.71",
             time: "From previous period",
             month: "Last month",
-            previousamount: "$684.04",
+            previousamount: "80hrs",
             series: [
               {
-                name: "series1",
-                data: [28, 30, 48, 50, 47, 40, 35, 48, 56, 42, 65, 41],
+                name: "AI Commits",
+                data: [2, 3, 4, 5, 4, 6, 3, 4, 5, 4, 5, 4],
               },
             ],
           },
@@ -164,15 +164,15 @@ export class SaasComponent implements OnInit, AfterViewInit {
         this.sassEarning = [
           {
             name: "This month",
-            amount: "$2100.35",
-            revenue: "0.4",
+            amount: "80hrs",
+            revenue: "0.75",
             time: "From previous period",
             month: "Last month",
-            previousamount: "$674.04",
+            previousamount: "60hrs",
             series: [
               {
-                name: "series1",
-                data: [28, 48, 39, 47, 48, 41, 28, 46, 25, 32, 24, 28],
+                name: "AI Commits",
+                data: [2, 4, 3, 2, 4, 1, 2, 4, 2, 3, 2, 2],
               },
             ],
           },
