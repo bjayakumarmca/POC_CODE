@@ -23,43 +23,63 @@ export class FilemanagerComponent implements OnInit {
   folders = [];
   fileContent = {};
 
-  staticdata = [{
-    "line_number": "6, 10, 14",
-    "issue_type": "Path Traversal",
-    "code_snippet": "entry.ExtractToFile(Path.Combine(extractPath, entry.FullName));",
-    "recommended_code_fix": "Validate and sanitize 'zipPath' and 'extractPath' to prevent path traversal vulnerabilities."
-   },
-   {
-    "line_number": "6",
-    "issue_type": "SQL Injection",
-    "code_snippet": "User ID and Password concatenation in connection string",
-    "recommended_code_fix": "Use parameterized queries or stored procedures to prevent SQL injection."
-   },
-   {
-      "line_number": "5",
-      "issue_type": "SQL Injection",
-      "code_snippet": "String url = \"jdbc:mysql://10.12.1.34/\" + request.getParameter(\"selectedDB\");",
-      "recommended_code_fix": "Use a prepared statement or sanitize the input to prevent SQL injection."
-   },
-   {
-    "line_number": "7, 10",
-    "issue_type": "Local File Inclusion (LFI)",
-    "code_snippet": "$_GET['file']",
-    "recommended_code_fix": "Validate the input file against a whitelist of allowed files or use an absolute path."
-   },
-   {
-    "line_number": "9, 11",
-    "issue_type": "Local File Inclusion",
-    "code_snippet": "$file = str_replace('../', '', $_POST['file']); include(\"pages/$file\");",
-    "recommended_code_fix": "Use a whitelist of allowed files instead of directly including user input."
-   },
-   {
-      "line_number": "8",
+  staticdata = [
+    {
+      "id":1,
+      "line_number": "6, 10",
+      "issue_type": "Buffer Overflow",
+      "code_snippet": "gets(username);",
+      "confidence" : [70],
+      "autoFixed": 'false',
+      "status": "Open",
+      "recommendations": "Replace 'gets()' with 'fgets()' to prevent buffer overflow. Also, ensure 'username' is properly sized or validated.",
+      "Scanning": "Buffer Overflow/gets.c"
+    },
+    {
+      "id":2,
+      "line_number": "1, 10, 20, 29, 38",
+      "issue_type": "Insecure Deserialization",
+      "code_snippet": "ObjectInputStream in = new ObjectInputStream(file);",
+      "confidence" : [75],
+      "status": "Open",
+      "autoFixed": 'false',
+      "recommendations": "Use a secure deserialization approach. Validate the incoming object type and implement a whitelist of allowed classes. Consider using a safer serialization format, such as JSON or XML, instead of Java's built-in serialization.",
+      "Scanning": "Unsafe Deserialization/java/SerializeToFile.java"
+    },
+    {
+      "id":3,
+      "line_number": "15",
+      "issue_type": "LDAP Injection",
+      "confidence" : [50],
+      "status": "Open",
+      "autoFixed": 'false',
+      "code_snippet": "searcher.Filter = \"(&(objectClass=user)(|(cn=\" + user + \")(sAMAccountName=\" + user + \")))\";",
+      "recommendations": "Use parameterized queries or validate/sanitize user input to prevent LDAP injection attacks.",
+      "Scanning": "LDAP Injection/LDAP.cs"
+    },
+    {
+      "id":4,
+      "line_number": "10",
       "issue_type": "Local File Inclusion (LFI)",
-      "code_snippet": "// include(\includes/.$_GET['library']..php\);",
-      "recommended_code_fix": "// Validate the input and use a whitelist of allowed libraries."
-   }
-   ];
+      "code_snippet": "include($_POST[\"page\"]);",
+      "confidence" : [95],
+      "status": "Open",
+      "autoFixed": 'false',
+      "recommendations": "Validate and sanitize the input from the 'page' parameter. Implement a whitelist of allowed files to prevent unauthorized file access.",
+      "Scanning": "File Inclusion/lfi6.php"
+    },
+    {
+      "id":5,
+      "line_number": "7, 10",
+      "issue_type": "Local File Inclusion (LFI)",
+      "confidence" : [80],
+      "status": "Open",
+      "autoFixed": 'false',
+      "code_snippet": "$file = str_replace('../', '', $_GET['file']);",
+      "recommendations": "Use a whitelist of allowed files or sanitize user input to prevent unauthorized file access.",
+      "Scanning": "File Inclusion/lfi13.php"
+    }
+  ];
 
   dynamicData = [
     {
@@ -70,15 +90,47 @@ export class FilemanagerComponent implements OnInit {
       "More Info URL": 'https://data.safetycli.com/v/71064/97c'
     },
     {
-      "Vulnerability found in l": "angchain-core version 0.1.12",
       "Vulnerability ID": "71609",
-      "Affected spec": "<0.1.30",
-      "ADVISORY": "LangChain affected versions allows directory traversal by an actor who is able to control the final part of the path parameter in a load_chain call. This bypasses the intended behavior of loading configurations only from the hwchase17/langchain-hub GitHub repository. The outcome can be disclosure of an API key for a large language model online service, or remote code... CVE-2024-28088",
-      "For more information about this vulnerability": "visit https://data.safetycli.com/v/71609/97c"
+      "Affected Spec": "<0.1.30",
+      "CVE": "CVE-2024-35199",
+      "Advisory": "LangChain affected versions allows directory traversal by an actor who is able to control the final part of the path parameter in a load_chain call. This bypasses the intended behavior of loading configurations only from the hwchase17/langchain-hub GitHub repository. The outcome can be disclosure of an API key for a large language model online service, or remote code... CVE-2024-28088",
+      "More Info URL": "https://data.safetycli.com/v/71609/97c"
     }
   ];
-
+  filteredStaticData =[];
   constructor(public router: Router,private http: HttpClient, private store: Store<{ data: RootReducerState }>) {
+  }
+
+  autoFixDone = false;
+  typingSpeed = 1; // Speed in milliseconds
+  displayedContent = '';
+  selectedId = 0;
+  commit = false;
+
+  typeFileContent() {
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < this.fileContent['content'].length) {
+        this.displayedContent += this.fileContent['content'][i];
+        i++;
+      } else {
+        clearInterval(interval);
+        this.commit = true;
+      }
+    }, this.typingSpeed);
+  } 
+
+  commitChanges(){
+    this.commit = false;
+    this.autoFixDone = false;
+    this.displayedContent = '';
+    this.fileContent = {};
+    this.staticdata.forEach(item => {
+      if (item.id === this.selectedId) {
+        item.status = 'Closed';
+      }
+    });
+    this.filteredStaticData = this.staticdata.filter(item => item.status === 'Open');
   }
   getRepoContent(): Observable<any> {
     return this.http.get<any>(`http://localhost:3000/api/repo`);
@@ -87,22 +139,56 @@ export class FilemanagerComponent implements OnInit {
   getFileContent(path): Observable<any> {
     return this.http.get<any>(`http://localhost:3000/api/file?path=${path}`);
   }
-  
-  getFileData(path){
+
+  getFileData(path, id){
     console.log(path);
+    this.selectedId = id;
+    console.log('Selected ID: ', this.selectedId);
     this.getFileContent(path).subscribe(data => {
       
       this.fileContent = data;
       let content = this.fileContent['content'];
       let lines = content.split('\n');
       this.fileContent['content'] = lines.map((line, index) => `<span class="line">${index + 1} ${line}</span>`).join('\n');
+      this.displayedContent = this.fileContent['content'];
+    });
+    
+  
+    this.filteredStaticData = this.staticdata.filter(item => {
+      return path === item.Scanning;
     });
   }
-  
+  showAllVul(){
+    this.filteredStaticData = this.staticdata.filter(item => item.status === 'Open');
+    this.fileContent = {};
+  }
+
+
+  autofix(id, recommendations) {
+    console.log('Auto Fixing issue: ', recommendations);
+    this.displayedContent = '';
+    this.selectedId = id;
+    if (recommendations.includes('Replace') && recommendations.includes('gets') && recommendations.includes('fgets')) {
+      let code = this.fileContent['content'];
+      let line = this.fileContent['line_number'];
+      let newCode = code.replace('gets', 'fgets');
+      this.fileContent['content'] = newCode;
+      console.log('Auto Fix Done');
+      this.autoFixDone = true;
+      this.typeFileContent();
+
+      // Update autofix flag in staticData where id matches
+      this.filteredStaticData.forEach(item => {
+        if (item.id === id) {
+          item.autoFixed = 'true';
+        }
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Apps' }, { label: 'File Manager', active: true }];
-
+    this.filteredStaticData = this.staticdata;
     this.getRepoContent().subscribe(data => {
       this.files = data;
       this.folders = Object.entries(this.files)
