@@ -5,12 +5,13 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { ChatComponent } from './chat/chat.component';
 import { DefaultComponent } from './dashboards/default/default.component';
 import { FilemanagerComponent } from './filemanager/filemanager.component';
+import { SaasComponent } from './dashboards/saas/saas.component';
 
 const routes: Routes = [
   // { path: '', redirectTo: 'dashboard' },
   {
     path: "",
-    component: DefaultComponent
+    component: SaasComponent
   },
   { path: 'dashboard', component: DefaultComponent },
   { path: 'calendar', component: CalendarComponent },
