@@ -15,20 +15,20 @@
             </li>
             <li class="breadcrumb-item" *ngIf="item.label == 'Projects'" style="cursor: pointer; font-size:16px;">
               <div>
-                <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myModal" (click)="openModal(content)">Add New Repo</button>
+                <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myModal" (click)="openModal(content)">Onboarding your repository</button>
                 <ng-template #content role="document" let-modal>
                   <div class="modal-header">
-                    <h5 class="modal-title" id="myModalLabel">Create a new repository</h5>
+                    <h5 class="modal-title" id="myModalLabel">Onboarding repository to Github</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modalRef.hide()"></button>
                   </div>
                   <div class="modal-body">
-                    <p>A repository contains all project files, including the revision history. Already have a project repository elsewhere? <a href="#" (click)="disableLink($event)">Import a repository.</a></p>
+                    <p>Import all the files, including revision history, from another version control system.</p>
                     <div style="display: flex;">
                       <div style="width:150px;">
                         <label for="example-text-input" class="col-form-label">Repository Name *</label>
                       </div>
                         <div style="margin-left:10px;">
-                          <input class="form-control" type="text" id="reponame" style="width:300px">
+                          <input class="form-control" type="text" id="reponame" style="width:300px" #reponame>
                         </div>
                     </div>
                     <div style="display: flex; margin-top:10px;">
@@ -36,21 +36,29 @@
                         <label for="example-text-input" class="col-form-label">Description (Optional)</label>
                       </div>
                         <div style="margin-left:10px;">
-                          <input class="form-control" type="text" id="descript" style="width:300px">
+                          <input class="form-control" type="text" id="descript" style="width:300px" #descript>
                         </div>
                     </div>
                     <div style="display: flex; margin-top:10px;">
                       <div style="width:150px;">
-                        <label for="example-text-input" class="col-form-label">Location</label>
+                        <label for="example-text-input" class="col-form-label">Repository URL *</label>
                       </div>
                         <div style="margin-left:10px;">
-                          <input class="form-control" type="text" id="location" style="width:300px">
+                          <input class="form-control" type="text" id="repourl" style="width:300px" #repourl>
+                        </div>
+                    </div>
+                    <div style="display: flex; margin-top:10px;">
+                      <div style="width:150px;">
+                        <label for="example-text-input" class="col-form-label">Site Location</label>
+                      </div>
+                        <div style="margin-left:10px;">
+                          <input class="form-control" type="text" id="site" style="width:300px" #site>
                         </div>
                     </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal" (click)="modalRef.hide()">Close</button>
-                    <button type="button" class="btn btn-primary waves-effect waves-light">Create Repository</button>
+                    <button type="button" class="btn btn-primary waves-effect waves-light" (click)="createRepo()">Onboard Repository</button>
                   </div>
                 </ng-template>
               </div>
