@@ -1,0 +1,28 @@
+.lnk-style:hover {
+    color: #007bff;
+    text-decoration: underline;
+
+}
+
+.file-content {
+    background-color: black;
+    color: white;
+    padding: 10px;
+}
+
+.line-numbers {
+    counter-reset: line;
+}
+
+.line {
+    counter-increment: line;
+}
+
+.line:before {
+    content: counter(line);
+    display: inline-block;
+    width: 30px;
+    margin-right: 10px;
+    text-align: right;
+    color: #999;
+}
