@@ -24,20 +24,20 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <div>
-                                            <p class="text-muted text-truncate mb-2">Total Projects</p>
-                                            <h5 class="mb-0">48</h5>
+                                            <p class="text-muted text-truncate mb-2">Total Repositories</p>
+                                            <h5 class="mb-0">10</h5>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
-                                            <p class="text-muted text-truncate mb-2">Projects</p>
-                                            <h5 class="mb-0">40</h5>
+                                            <p class="text-muted text-truncate mb-2">Scans Triggered</p>
+                                            <h5 class="mb-0">12</h5>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div>
-                                            <p class="text-muted text-truncate mb-2">Clients</p>
-                                            <h5 class="mb-0">18</h5>
+                                            <p class="text-muted text-truncate mb-2">Fixed Vulnerability</p>
+                                            <h5 class="mb-0">115</h5>
 
                                         </div>
                                     </div>
@@ -100,12 +100,12 @@
                                         <i class="bx bx-copy-alt"></i>
                                     </span>
                                 </div>
-                                <h5 class="font-size-14 mb-0">Orders</h5>
+                                <h5 class="font-size-14 mb-0">Total Commits</h5>
                             </div>
                             <div class="text-muted mt-4">
-                                <h4>1,452 <i class="mdi mdi-chevron-up ms-1 text-success"></i></h4>
+                                <h4>120 <i class="mdi mdi-chevron-up ms-1 text-success"></i></h4>
                                 <div class="d-flex">
-                                    <span class="badge badge-soft-success font-size-12"> + 0.2% </span> <span class="ms-2 text-truncate">From previous period</span>
+                                    <span class="badge badge-soft-success font-size-12"> + 0.6% </span> <span class="ms-2 text-truncate">From previous period</span>
                                 </div>
                             </div>
                         </div>
@@ -121,12 +121,12 @@
                                         <i class="bx bx-archive-in"></i>
                                     </span>
                                 </div>
-                                <h5 class="font-size-14 mb-0">Revenue</h5>
+                                <h5 class="font-size-14 mb-0">AI Commits</h5>
                             </div>
                             <div class="text-muted mt-4">
-                                <h4>$ 28,452 <i class="mdi mdi-chevron-up ms-1 text-success"></i></h4>
+                                <h4> 85 <i class="mdi mdi-chevron-up ms-1 text-success"></i></h4>
                                 <div class="d-flex">
-                                    <span class="badge badge-soft-success font-size-12"> + 0.2% </span> <span class="ms-2 text-truncate">From previous period</span>
+                                    <span class="badge badge-soft-success font-size-12"> + 1.2% </span> <span class="ms-2 text-truncate">From previous period</span>
                                 </div>
                             </div>
                         </div>
@@ -142,10 +142,10 @@
                                         <i class="bx bx-purchase-tag-alt"></i>
                                     </span>
                                 </div>
-                                <h5 class="font-size-14 mb-0">Average Price</h5>
+                                <h5 class="font-size-14 mb-0">Manual Commits</h5>
                             </div>
                             <div class="text-muted mt-4">
-                                <h4>$ 16.2 <i class="mdi mdi-chevron-up ms-1 text-success"></i></h4>
+                                <h4>35  <i class="mdi mdi-chevron-up ms-1 text-success"></i></h4>
 
                                 <div class="d-flex">
                                     <span class="badge badge-soft-warning font-size-12"> 0% </span> <span class="ms-2 text-truncate">From previous period</span>
@@ -175,7 +175,7 @@
                                 <label class="input-group-text">Month</label>
                             </div>
                         </div>
-                        <h4 class="card-title mb-4">Earning</h4>
+                        <h4 class="card-title mb-4">Productivity</h4>
                     </div>
                     @for (item of sassEarning; track $index) {
                     <div class="row">
@@ -212,7 +212,7 @@
         <div class="col-xl-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-4">Sales Analytics</h4>
+                    <h4 class="card-title mb-4">Scan Analytics</h4>
 
                     <div>
                         <apx-chart class="apex-charts" dir="ltr" [series]="salesAnalyticsDonutChart.series" [chart]="salesAnalyticsDonutChart.chart" [colors]="salesAnalyticsDonutChart.colors" [plotOptions]="salesAnalyticsDonutChart.plotOptions" [legend]="salesAnalyticsDonutChart.legend" [labels]="salesAnalyticsDonutChart.labels">
@@ -224,22 +224,22 @@
                             <div class="col-4">
                                 <div class="mt-4">
                                     <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-primary me-1"></i>
-                                        Product A</p>
-                                    <h5>$ 2,132</h5>
+                                        SAST</p>
+                                    <h5>85</h5>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mt-4">
                                     <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-success me-1"></i>
-                                        Product B</p>
-                                    <h5>$ 1,763</h5>
+                                        DAST</p>
+                                    <h5>25</h5>
                                 </div>
                             </div>
                             <div class="col-4">
                                 <div class="mt-4">
                                     <p class="mb-2 text-truncate"><i class="mdi mdi-circle text-danger me-1"></i>
-                                        Product C</p>
-                                    <h5>$ 973</h5>
+                                        SCA</p>
+                                    <h5>5</h5>
                                 </div>
                             </div>
                         </div>
