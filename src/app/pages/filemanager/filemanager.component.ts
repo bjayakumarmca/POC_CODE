@@ -4,7 +4,9 @@ import { Store } from '@ngrx/store';
 import { RootReducerState } from 'src/app/store';
 import { selectData } from 'src/app/store/filemanager/filemanager-selector';
 import { fetchRecentFilesData } from 'src/app/store/filemanager/filemanager.actions';
-
+import { HttpClient ,HttpHeaders} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-filemanager',
   templateUrl: './filemanager.component.html',
@@ -17,13 +19,57 @@ export class FilemanagerComponent implements OnInit {
   public isCollapsed: boolean = false;
   dismissible = true;
   Recentfile: any
-
-  constructor(public router: Router, private store: Store<{ data: RootReducerState }>) {
+  files = {};
+  folders = [];
+  fileContent = {};
+  constructor(public router: Router,private http: HttpClient, private store: Store<{ data: RootReducerState }>) {
   }
+  getRepoContent(): Observable<any> {
+    return this.http.get<any>(`http://localhost:3000/api/repo`);
+  }
+
+
+  getFileContent(path): Observable<any> {
+    return this.http.get<any>(`http://localhost:3000/api/file?path=${path}`);
+  }
+  getFileData(path){
+    console.log(path);
+    this.getFileContent(path).subscribe(data => {
+      
+      this.fileContent = data;
+      let content = this.fileContent['content'];
+      let lines = content.split('\n');
+      this.fileContent['content'] = lines.map((line, index) => `<span class="line">${index + 1} ${line}</span>`).join('\n');
+    });
+  }
+  
 
   ngOnInit(): void {
     this.breadCrumbItems = [{ label: 'Apps' }, { label: 'File Manager', active: true }];
 
+    this.getRepoContent().subscribe(data => {
+      this.files = data;
+      this.folders = Object.entries(this.files)
+        .map(([name, files]) => ({
+          name,
+          files,
+          isCollapsed: false
+        }))
+        .sort((a, b) => {
+          if (a.name === '') return 1; // Empty folders should be at the end
+          if (b.name === '') return -1; // Empty folders should be at the end
+          return a.name.localeCompare(b.name); // Sort folders in ascending order based on the key
+        });
+
+      
+      if (this.folders && this.folders.length > 0) {
+        
+        this.getFileData(this.folders[0].name+'/'+this.folders[0].files[0]);
+      }
+    });
+ 
+    
+    
     this.store.dispatch(fetchRecentFilesData());
     this.store.select(selectData).subscribe(data => {
       this.Recentfile = data
