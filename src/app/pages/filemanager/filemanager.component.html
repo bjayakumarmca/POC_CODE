@@ -50,6 +50,11 @@
                 <!-- filemanager-leftsidebar -->
 
                 <div class="w-100">
+
+
+
+
+
                     <div class="card" >
                         <div class="card-body" >
                             <div *ngIf="fileContent && fileContent['path']">
@@ -90,48 +95,146 @@
                             </div>
 
                             <div class="mt-4">
-                                <div class="d-flex flex-wrap">
+                                <!-- <div class="d-flex flex-wrap">
                                     <h5 class="font-size-16 me-3">Scan Results</h5>
 
                                     <div class="ms-auto">
                                         <a href="javascript: void(0);" class="fw-medium text-reset">View All</a>
                                     </div>
                                 </div>
-                                <hr class="mt-2">
+                                <hr class="mt-2"> -->
 
-                                <div class="table-responsive">
+
+                                <div class="col-xl-12 col-lg-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="d-flex flex-wrap align-items-start">
+                                                <div class="me-2">
+                                                    <h5 class="card-title mb-0">Scan Results</h5>
+                                                </div>
+                                                <div class="ms-auto">
+                        
+                                                </div>
+                                            </div>
+                                            <tabset class="nav-tabs nav-tabs-custom card-header-tabs custom-widget-nav ms-auto">
+                                                <tab heading="Static" class="mt-4">
+                                                    <ngx-simplebar style="max-height: 500px;">
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item py-3" *ngFor="let data of staticdata; let i = index">
+                                                                <div class="d-flex">
+                                                                   
+                                                                    <div class="align-self-center overflow-hidden me-auto">
+                                                                        <div>
+                                                                            <h5 class="font-size-14 text-truncate"><a href="javascript: void(0);" class="text-dark">
+                                                                                {{data.issue_type}}</a>
+                                                                            </h5>
+                                                                            <p class="text-muted mb-0">Line no. {{data.line_number}}</p>
+                                                                            <p> Code with issue </p>
+                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                                                                <pre class="line-numbers" [innerHTML]="data.code_snippet"></pre>
+                                                                            </div>
+
+                                                                            <p> Recommended fix</p>
+                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                                                                <pre class="line-numbers" [innerHTML]="data.recommended_code_fix"></pre>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                        
+                                                                    <div class="dropdown ms-2" dropdown>
+                                                                        <a class="text-muted font-size-14" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+                                                                            <i class="mdi mdi-dots-horizontal"></i>
+                                                                        </a>
+                        
+                                                                        <div class="dropdown-menu dropdown-menu-end" *dropdownMenu>
+                                                                            <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                                                                            <a class="dropdown-item" href="javascript:void(0);">Another
+                                                                                action</a>
+                                                                            <a class="dropdown-item" href="javascript:void(0);">Something
+                                                                                else
+                                                                                here</a>
+                                                                        </div>
+                                                                    </div>
+                        
+                                                                </div>
+                                                            </li>
+                        
+                                                           
+                                                           
+                                                        </ul>
+                                                    </ngx-simplebar>
+                                                </tab>
+                                                <tab heading="Dynamic" class="mt-4">
+                                                    <ngx-simplebar style="height: 500px;">
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item py-3" *ngFor="let data of staticdata; let i = index">
+                                                                <div class="d-flex">
+                                                                   
+                                                                    <div class="align-self-center overflow-hidden me-auto">
+                                                                        <div>
+                                                                            <h5 class="font-size-14 text-truncate"><a href="javascript: void(0);" class="text-dark">
+                                                                                {{data.issue_type}}</a>
+                                                                            </h5>
+                                                                            <p class="text-muted mb-0">Line no. {{data.line_number}}</p>
+                                                                            <p> Code with issue </p>
+                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                                                                <pre class="line-numbers" [innerHTML]="data.code_snippet"></pre>
+                                                                            </div>
+
+                                                                            <p> Recommended fix</p>
+                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                                                                <pre class="line-numbers" [innerHTML]="data.recommended_code_fix"></pre>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                        
+                                                                    <div class="dropdown ms-2" dropdown>
+                                                                        <a class="text-muted font-size-14" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+                                                                            <i class="mdi mdi-dots-horizontal"></i>
+                                                                        </a>
+                        
+                                                                        <div class="dropdown-menu dropdown-menu-end" *dropdownMenu>
+                                                                            <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                                                                            <a class="dropdown-item" href="javascript:void(0);">Another
+                                                                                action</a>
+                                                                            <a class="dropdown-item" href="javascript:void(0);">Something
+                                                                                else
+                                                                                here</a>
+                                                                        </div>
+                                                                    </div>
+                        
+                                                                </div>
+                                                            </li>
+                                                           
+                                                        </ul>
+                                                    </ngx-simplebar>
+                                                </tab>
+                                            </tabset>
+                                        </div>
+                                    </div>
+                                </div>
+            
+            
+                               <!--  <div class="table-responsive">
                                     <table class="table align-middle table-nowrap table-hover mb-0">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Date modified</th>
-                                                <th scope="col" colspan="2">Size</th>
+                                                <th scope="col">Line Number</th>
+                                                <th scope="col">Issue Type</th>
+                                                <th scope="col">Code Snippet</th>
+                                                <th scope="col">Recommended Code Fix</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @for(data of Recentfile;track $index){
-                                            <tr>
-                                                <td><a href="javascript: void(0);" class="text-dark fw-medium">
-                                                        <i class="{{data.icon}} font-size-16 align-middle text-primary me-2"></i>{{data.name}}</a></td>
-                                                <td>{{data.date}}</td>
-                                                <td>{{data.size}}</td>
-                                                <td>
-                                                    <div class="dropdown" dropdown>
-                                                        <a class="font-size-16 text-muted dropdown-toggle" role="button" dropdownToggle data-toggle="dropdown" aria-haspopup="true">
-                                                            <i class="mdi mdi-dots-horizontal"></i>
-                                                        </a>
-
-                                                        <div class="dropdown-menu dropdown-menu-end" *dropdownMenu>
-                                                            @for(item of data.actions;track $index){
-                                                            <a class="dropdown-item" href="javascript: void(0);">{{item}}</a>
-                                                            }
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>}
+                                            <tr *ngFor="let data of staticdata; let i = index">
+                                                <td>{{data.line_number}}</td>
+                                                <td>{{data.issue_type}}</td>
+                                                <td>{{data.code_snippet}}</td>
+                                                <td>{{data.recommended_code_fix}}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

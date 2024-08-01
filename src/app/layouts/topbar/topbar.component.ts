@@ -56,6 +56,7 @@ export class TopbarComponent implements OnInit {
   @Output() mobileMenuButtonClicked = new EventEmitter();
 
   ngOnInit() {
+  
     // this.initialAppState = initialState;
     this.store.select('layout').subscribe((data) => {
       this.theme = data.DATA_LAYOUT;
@@ -71,6 +72,7 @@ export class TopbarComponent implements OnInit {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+    document.getElementById("vertical-menu-btn").click();
   }
 
   setLanguage(text: string, lang: string, flag: string) {
