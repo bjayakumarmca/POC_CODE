@@ -85,7 +85,7 @@ progressMessage = '';
       }
 
       messageIndex = (messageIndex + 1);
-    }, 10);
+    }, 1000);
   }
   autoFixDone = false;
   typingSpeed = 1; // Speed in milliseconds
