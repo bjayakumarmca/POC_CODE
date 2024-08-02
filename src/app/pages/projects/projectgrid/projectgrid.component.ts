@@ -41,6 +41,7 @@ export class ProjectgridComponent implements OnInit {
   site='';
   descript='';
   logo='';
+  pageNo=1;
   constructor(private modalService: BsModalService, public store: Store, private formBuilder: UntypedFormBuilder,
     private http: HttpClient, private router: Router) {
 
@@ -53,7 +54,11 @@ export class ProjectgridComponent implements OnInit {
       this.projectData = data;
       this.returnedArray = data;
       this.projectData = this.returnedArray.slice(0, 9);
+      if(localStorage.getItem('isRepoCreated') && localStorage.getItem('isRepoCreated') === 'yes'){
+        this.projectData = this.returnedArray.slice(0, 8);
+      }
     });
+    this.onStorageItemCreated();
   }
 
   onStorageItemCreated(){
@@ -64,13 +69,19 @@ export class ProjectgridComponent implements OnInit {
       this.site = localStorage.getItem('site');
       this.descript = localStorage.getItem('descript');
       this.logo = this.logoMaker(this.repoName);
+      this.projectData = this.returnedArray.slice(0, 8);
     }
   }
 
   // page change event
   pageChanged(event: any): void {
-    const startItem = (event.page - 1) * event.itemsPerPage;
+    let startItem = (event.page - 1) * event.itemsPerPage;
     this.endItem = event.page * event.itemsPerPage;
+    if(localStorage.getItem('isRepoCreated') && localStorage.getItem('isRepoCreated') === 'yes'){
+      startItem = (event.page - 1) * 8;
+      this.endItem = event.page * 8;
+    }
+    this.pageNo = event.page;
     this.projectData = this.returnedArray.slice(startItem, this.endItem);
   }
 
