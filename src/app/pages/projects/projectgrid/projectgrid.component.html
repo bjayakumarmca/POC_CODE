@@ -2,7 +2,7 @@
   <app-page-title title="Dashboard" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
   <div class="row">
-    <div class=" col-xl-4 col-sm-6" *ngIf="isRepoCreated === 'yes'">
+    <div class=" col-xl-4 col-sm-6" *ngIf="isRepoCreated === 'yes'" style="cursor: pointer;" (click)="goToFileManager()">
       <div class="card">
         <div class="card-body">
           <div class="d-flex">
@@ -52,7 +52,7 @@
       </div>
     </div>
     @for(grid of projectData;track $index){
-    <div class=" col-xl-4 col-sm-6">
+    <div class=" col-xl-4 col-sm-6" style="cursor: pointer;">
       <div class="card">
         <div class="card-body">
           <div class="d-flex">

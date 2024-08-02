@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { fetchprojectData } from 'src/app/store/ProjectsData/project.actions';
 import { selectData } from 'src/app/store/ProjectsData/project-selector';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-projectgrid',
@@ -40,7 +41,8 @@ export class ProjectgridComponent implements OnInit {
   site='';
   descript='';
   logo='';
-  constructor(private modalService: BsModalService, public store: Store, private formBuilder: UntypedFormBuilder,private http: HttpClient) {
+  constructor(private modalService: BsModalService, public store: Store, private formBuilder: UntypedFormBuilder,
+    private http: HttpClient, private router: Router) {
 
   }
 
@@ -80,5 +82,9 @@ export class ProjectgridComponent implements OnInit {
       .map(word => word[0])
       .join('')
       .toUpperCase();
+  }
+
+  goToFileManager(){
+    this.router.navigate(['/filemanager']);
   }
 }
