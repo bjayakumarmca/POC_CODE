@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <app-page-title title="Dashboard" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <app-page-title title="Dashboard" [breadcrumbItems]="breadCrumbItems" (storageItemCreated)="onStorageItemCreated()"></app-page-title>
 
   <div class="row">
     <div class=" col-xl-4 col-sm-6" *ngIf="isRepoCreated === 'yes'" style="cursor: pointer;" (click)="goToFileManager()">

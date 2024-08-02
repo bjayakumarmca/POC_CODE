@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -12,6 +12,7 @@ export class PagetitleComponent implements OnInit {
   @ViewChild('repourl') myrepourl!: ElementRef;
   @ViewChild('site') mysite!: ElementRef;
   @ViewChild('descript') mydescript!: ElementRef;
+  @Output() storageItemCreated = new EventEmitter<void>();
   @Input() breadcrumbItems;
   @Input() title: string;
 
@@ -36,7 +37,7 @@ export class PagetitleComponent implements OnInit {
     localStorage.setItem('descript',this.mydescript.nativeElement.value);
     this.modalRef.hide();
     setTimeout(()=>{
-      window.location.reload();
+      this.storageItemCreated.emit();
     }, 3000);
   }
   disableLink(event: Event) {

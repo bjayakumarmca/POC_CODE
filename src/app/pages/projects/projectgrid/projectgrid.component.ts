@@ -48,14 +48,6 @@ export class ProjectgridComponent implements OnInit {
 
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Projects' }, { label: 'Projects Grid', active: true }];
-    if(localStorage.getItem('isRepoCreated') && localStorage.getItem('isRepoCreated') === 'yes'){
-      this.isRepoCreated = 'yes';
-      this.repoName = localStorage.getItem('reponame');
-      this.repoUrl = localStorage.getItem('repourl');
-      this.site = localStorage.getItem('site');
-      this.descript = localStorage.getItem('descript');
-      this.logo = this.logoMaker(this.repoName);
-    }
     this.store.dispatch(fetchprojectData());
     this.store.select(selectData).subscribe(data => {
       this.projectData = data;
@@ -64,6 +56,16 @@ export class ProjectgridComponent implements OnInit {
     });
   }
 
+  onStorageItemCreated(){
+    if(localStorage.getItem('isRepoCreated') && localStorage.getItem('isRepoCreated') === 'yes'){
+      this.isRepoCreated = 'yes';
+      this.repoName = localStorage.getItem('reponame');
+      this.repoUrl = localStorage.getItem('repourl');
+      this.site = localStorage.getItem('site');
+      this.descript = localStorage.getItem('descript');
+      this.logo = this.logoMaker(this.repoName);
+    }
+  }
 
   // page change event
   pageChanged(event: any): void {
