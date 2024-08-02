@@ -40,10 +40,11 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { MapsModule } from './maps/maps.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ChatComponent } from './chat/chat.component';
+import { PenTestComponent } from './pen-test/pen-test.component';
 
 import { FilemanagerComponent } from './filemanager/filemanager.component';
 
-@NgModule({ declarations: [CalendarComponent, ChatComponent, FilemanagerComponent], imports: [CommonModule,
+@NgModule({ declarations: [CalendarComponent, ChatComponent, FilemanagerComponent, PenTestComponent], imports: [CommonModule,
         FormsModule,
         BsDropdownModule.forRoot(),
         ModalModule.forRoot(),
