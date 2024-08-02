@@ -103,13 +103,16 @@
                         </div>
                     </div>
                     <div style="display: flex; margin-top:10px;">
-                      <div style="width:150px;">
-                        <label for="example-text-input" class="col-form-label">Test Level</label>
+                      <div style="width:150px;"><label class="col-form-label">Test Level</label></div>
+                      <div style="margin-left:10px;">
+                          <select class="form-select" style="width:300px" id="selectlevel" #selectlevel>
+                              <option>Select</option>
+                              <option value="Easy">Easy</option>
+                              <option value="Medium">Medium</option>
+                              <option value="Hard">Hard</option>
+                          </select>
                       </div>
-                        <div style="margin-left:10px;">
-                          <input class="form-control" type="text" id="testlevel" style="width:300px" #testlevel>
-                        </div>
-                    </div>
+                  </div>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal" (click)="modalRef.hide()">Close</button>

@@ -13,7 +13,7 @@ export class PagetitleComponent implements OnInit {
   @ViewChild('descript') mydescript!: ElementRef;
   @ViewChild('appname') appname!: ElementRef;
   @ViewChild('appurl') appurl!: ElementRef;
-  @ViewChild('testlevel') testlevel!: ElementRef;
+  @ViewChild('selectlevel') selectlevel!: ElementRef;
   @Output() storageItemCreated = new EventEmitter<void>();
   @Output() newAppCreated = new EventEmitter<void>();
   @Input() breadcrumbItems;
@@ -49,7 +49,7 @@ export class PagetitleComponent implements OnInit {
     localStorage.setItem('isAppCreated','yes');
     localStorage.setItem('appname',this.appname.nativeElement.value);
     localStorage.setItem('appurl',this.appurl.nativeElement.value);
-    localStorage.setItem('testlevel',this.testlevel.nativeElement.value);
+    localStorage.setItem('testlevel',this.selectlevel.nativeElement.value);
     this.modalRef.hide();
     setTimeout(()=>{
       this.newAppCreated.emit();

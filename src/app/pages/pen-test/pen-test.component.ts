@@ -16,6 +16,7 @@ export class PenTestComponent implements OnInit {
   logo='';
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Projects' }, { label: 'Projects Grid', active: true }];
+    this.onNewAppCreated();
   }
 
   onNewAppCreated(){
