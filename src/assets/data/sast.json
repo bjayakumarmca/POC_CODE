@@ -1,0 +1,57 @@
+[
+    {
+      "id":1,
+      "line_number": "6, 10",
+      "issue_type": "Buffer Overflow",
+      "code_snippet": "gets(username);",
+      "confidence" : [70],
+      "autoFixed": "false",
+      "status": "Open",
+      "recommendations": "Replace 'gets()' with 'fgets()' to prevent buffer overflow. Also, ensure 'username' is properly sized or validated.",
+      "Scanning": "Buffer Overflow/gets.c"
+    },
+    {
+      "id":2,
+      "line_number": "1, 10, 20, 29, 38",
+      "issue_type": "Insecure Deserialization",
+      "code_snippet": "ObjectInputStream in = new ObjectInputStream(file);",
+      "confidence" : [75],
+      "status": "Open",
+      "autoFixed": "false",
+      "recommendations": "Use a secure deserialization approach. Validate the incoming object type and implement a whitelist of allowed classes. Consider using a safer serialization format, such as JSON or XML, instead of Java's built-in serialization.",
+      "Scanning": "Unsafe Deserialization/java/SerializeToFile.java"
+    },
+    {
+      "id":3,
+      "line_number": "15",
+      "issue_type": "LDAP Injection",
+      "confidence" : [50],
+      "status": "Open",
+      "autoFixed": "false",
+      "code_snippet": "searcher.Filter = \"(&(objectClass=user)(|(cn=\" + user + \")(sAMAccountName=\" + user + \")))\";",
+      "recommendations": "Use parameterized queries or validate/sanitize user input to prevent LDAP injection attacks.",
+      "Scanning": "LDAP Injection/LDAP.cs"
+    },
+    {
+      "id":4,
+      "line_number": "10",
+      "issue_type": "Local File Inclusion (LFI)",
+      "code_snippet": "include($_POST[\"page\"]);",
+      "confidence" : [95],
+      "status": "Open",
+      "autoFixed": "false",
+      "recommendations": "Validate and sanitize the input from the 'page' parameter. Implement a whitelist of allowed files to prevent unauthorized file access.",
+      "Scanning": "File Inclusion/lfi6.php"
+    },
+    {
+      "id":5,
+      "line_number": "7, 10",
+      "issue_type": "Local File Inclusion (LFI)",
+      "confidence" : [80],
+      "status": "Open",
+      "autoFixed": "false",
+      "code_snippet": "$file = str_replace('../', '', $_GET['file']);",
+      "recommendations": "Use a whitelist of allowed files or sanitize user input to prevent unauthorized file access.",
+      "Scanning": "File Inclusion/lfi13.php"
+    }
+  ]

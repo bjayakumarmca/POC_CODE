@@ -1,0 +1,67 @@
+[
+    {
+      "issueType": "ADNS Blind SSRF on Sensitive Headers",
+      "severity": "M",
+      "numberOfIssues": 3,
+      "url": "https://apps.localhost.com/",
+      "action": "Change server's supported ciphersuites",
+      "cause": "Incorrect processing, sanitation, or validation of user input that contain elements later joined with URI",
+      "risk": "It is possible to manipulate the server into processing, sending, or retrieving information in an unintended, insecure manner. The application sends requests to resources using externally-influenced input and fails to neutralize elements that could be used to abuse internal or external functionality. This can be used to cause the server to initiate unintended requests on behalf of the attacker. There are three main examples of abuse of this vulnerability: [1] An attacker could cause the server to leak important information, by sending information normally accessible only by the application to an external server. [2] An attacker could cause the server to retrieve information from an untrusted source and process, store, or present it to the user. [3] In an environment where services communicated internally, an attacker could cause an action to be performed by the server, using the server's privileges.",
+      "fix": "Ensure proper processing, sanitation, and validation of user input. Avoid joining sensitive information with URI elements and review application logic for secure handling of external input."
+    },
+    {
+      "issueType": "Weak Cipher Suites - ROBOT Attack: Vulnerable cipher suites are supported by the server",
+      "severity": "M",
+      "numberOfIssues": 2,
+      "url": "https://apps.localhost.com/api/user/profile",
+      "action": "Validate and sanitize all externally supplied data. Validate access control mechanisms.",
+      "risk": "It may be possible to steal or manipulate customer session and cookies, which might be used to impersonate a legitimate user, allowing the hacker to view or alter user records, and to perform transactions as that user.",
+      "fix": "Change server's supported ciphersuite"
+    },
+    {
+      "issueType": "Weak Ciphers are detected: Not all cipher suites support Perfect Forward Secrecy",
+      "severity": "M",
+      "numberOfIssues": 1,
+      "url": "https://apps.localhost.com/css/",
+      "action": "Change server's supported ciphersuites",
+      "cause": "The web server or application server are configured in an insecure way",
+      "risk": "An attacker can decrypt a secure communication by generating a secret key once the host's private key is compromised. AppScan detected weak cipher suites that do not support PFS - Perfect Forward Secrecy. When PFS is not supported, if the host's private key is compromised, an attacker can decrypt the pre-master secret and later generate the Secret Key that is used for secure communication. This is because no unique session key is generated for every communication session between Client and Server.",
+      "fix": "Ensure that the server supports cipher suites with Perfect Forward Secrecy, such as DHE or ECDHE key exchanges."
+    },
+    {
+      "issueType": "Check for SRI (Subresource Integrity) support",
+      "severity": "L",
+      "numberOfIssues": 1,
+      "url": "https://apps.localhost.com/images/",
+      "action": "Add to each third-party script/link element support to SRI (Subresource Integrity)",
+      "risk": "Without SRI, there is a risk that an attacker could modify or tamper with third-party resources served to users, leading to potential security vulnerabilities.",
+      "fix": "Implement SRI for all third-party scripts and resources to ensure their integrity."
+    },
+    {
+      "issueType": "Cookie with Insecure or Improper or Missing SameSite attribute",
+      "severity": "L",
+      "numberOfIssues": 1,
+      "url": "https://apps.localhost.com/js/",
+      "action": "Config your server to use the 'Content-Security-Policy' header with secure policies",
+      "risk": "Insecure or missing SameSite attributes can lead to cross-site request forgery (CSRF) attacks by allowing cookies to be sent with cross-site requests.",
+      "fix": "Configure the SameSite attribute for cookies to 'Strict' or 'Lax' to prevent CSRF attacks."
+    },
+    {
+      "issueType": "https://apps.localhost.com/js/_props.href,/n",
+      "severity": "L",
+      "numberOfIssues": 1,
+      "url": "https://apps.localhost.com/js/_props.href,/n",
+      "action": "Config your server to use the 'Referrer Policy' header with secure policies",
+      "risk": "An improperly configured Referrer Policy can leak sensitive information through referrer headers in HTTP requests.",
+      "fix": "Set a secure Referrer Policy, such as 'no-referrer' or 'same-origin', to control the information sent in referrer headers."
+    },
+    {
+      "issueType": "https://apps.localhost.com/js/bundle.f3ad0a02973eed9de7b5.js",
+      "severity": "L",
+      "numberOfIssues": 1,
+      "url": "https://apps.localhost.com/js/bundle.f3ad0a02973eed9de7b5.js",
+      "action": "Add to each third-party script/link element support to SRI (Subresource Integrity)",
+      "risk": "Without SRI, there is a risk that an attacker could modify or tamper with third-party resources served to users, leading to potential security vulnerabilities.",
+      "fix": "Implement SRI for all third-party scripts and resources to ensure their integrity."
+    }
+  ]

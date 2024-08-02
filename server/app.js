@@ -5,11 +5,13 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
+
+const token =""
 app.get('/api/repo',cors(), async (req, res) => {
   try {
     const fetchDirectoryContent = async (path) => {
-      const headers = { 'Authorization': '' };
-      const response = await axios.get(`${path}`, { headers });
+      const headers = { 'Authorization': token };
+      const response = await axios.get(`https://api.github.com/repos/bjayakumarmca/vul-scan-repo/contents/${path}`, { headers });
       return response.data;
     };
 
@@ -46,8 +48,8 @@ app.get('/api/file', cors(),async (req, res) => {
       return;
     }
 
-    const headers = { 'Authorization': '' };
-    const response = await axios.get(`${filePath}`, { headers });
+    const headers = { 'Authorization': token };
+    const response = await axios.get(`https://api.github.com/repos/bjayakumarmca/vul-scan-repo/contents/${filePath}`, { headers });
 
     // GitHub API returns file content in base64 format, so we need to decode it
     const content = Buffer.from(response.data.content, 'base64').toString('utf8');

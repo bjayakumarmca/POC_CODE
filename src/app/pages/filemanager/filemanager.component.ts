@@ -41,81 +41,11 @@ export class FilemanagerComponent implements OnInit {
   fileContent = {};
   isLoading = true;
   showScanResults = false;
-  staticdata = [
-    {
-      "id":1,
-      "line_number": "6, 10",
-      "issue_type": "Buffer Overflow",
-      "code_snippet": "gets(username);",
-      "confidence" : [70],
-      "autoFixed": 'false',
-      "status": "Open",
-      "recommendations": "Replace 'gets()' with 'fgets()' to prevent buffer overflow. Also, ensure 'username' is properly sized or validated.",
-      "Scanning": "Buffer Overflow/gets.c"
-    },
-    {
-      "id":2,
-      "line_number": "1, 10, 20, 29, 38",
-      "issue_type": "Insecure Deserialization",
-      "code_snippet": "ObjectInputStream in = new ObjectInputStream(file);",
-      "confidence" : [75],
-      "status": "Open",
-      "autoFixed": 'false',
-      "recommendations": "Use a secure deserialization approach. Validate the incoming object type and implement a whitelist of allowed classes. Consider using a safer serialization format, such as JSON or XML, instead of Java's built-in serialization.",
-      "Scanning": "Unsafe Deserialization/java/SerializeToFile.java"
-    },
-    {
-      "id":3,
-      "line_number": "15",
-      "issue_type": "LDAP Injection",
-      "confidence" : [50],
-      "status": "Open",
-      "autoFixed": 'false',
-      "code_snippet": "searcher.Filter = \"(&(objectClass=user)(|(cn=\" + user + \")(sAMAccountName=\" + user + \")))\";",
-      "recommendations": "Use parameterized queries or validate/sanitize user input to prevent LDAP injection attacks.",
-      "Scanning": "LDAP Injection/LDAP.cs"
-    },
-    {
-      "id":4,
-      "line_number": "10",
-      "issue_type": "Local File Inclusion (LFI)",
-      "code_snippet": "include($_POST[\"page\"]);",
-      "confidence" : [95],
-      "status": "Open",
-      "autoFixed": 'false',
-      "recommendations": "Validate and sanitize the input from the 'page' parameter. Implement a whitelist of allowed files to prevent unauthorized file access.",
-      "Scanning": "File Inclusion/lfi6.php"
-    },
-    {
-      "id":5,
-      "line_number": "7, 10",
-      "issue_type": "Local File Inclusion (LFI)",
-      "confidence" : [80],
-      "status": "Open",
-      "autoFixed": 'false',
-      "code_snippet": "$file = str_replace('../', '', $_GET['file']);",
-      "recommendations": "Use a whitelist of allowed files or sanitize user input to prevent unauthorized file access.",
-      "Scanning": "File Inclusion/lfi13.php"
-    }
-  ];
+  staticdata: any = [];
 
-  dynamicData = [
-    {
-      "Vulnerability ID": "71064",
-      "Affected Spec": "<2.32.2",
-      "Advisory": "Affected versions of Requests, when making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same host will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool. Requests 2.32.0 fixes the issue, but versions 2.32.0 and 2.32.1 were yanked due to conflicts with CVE-2024-35195 mitigation.",
-      "CVE": "CVE-2024-35195",
-      "More Info URL": 'https://data.safetycli.com/v/71064/97c'
-    },
-    {
-      "Vulnerability ID": "71609",
-      "Affected Spec": "<0.1.30",
-      "CVE": "CVE-2024-35199",
-      "Advisory": "LangChain affected versions allows directory traversal by an actor who is able to control the final part of the path parameter in a load_chain call. This bypasses the intended behavior of loading configurations only from the hwchase17/langchain-hub GitHub repository. The outcome can be disclosure of an API key for a large language model online service, or remote code... CVE-2024-28088",
-      "More Info URL": "https://data.safetycli.com/v/71609/97c"
-    }
-  ];
+  scaData: any = [];
   filteredStaticData =[];
+  filteredScaData = [];
 
   isScanning = false;
 progress = 0;
@@ -155,7 +85,7 @@ progressMessage = '';
       }
 
       messageIndex = (messageIndex + 1);
-    }, 1000);
+    }, 10);
   }
   autoFixDone = false;
   typingSpeed = 1; // Speed in milliseconds
@@ -180,13 +110,13 @@ progressMessage = '';
 
     this.isScanning = true;
     this.progress = 0;
-    this.progressMessage = 'Starting scan...';
+    this.progressMessage = 'Starting Process...';
 
     const messages = [
+      'Committing changes..',
+      "Pushing changes to the repository..",
     'Scanning the code for vulnerabilities..',
     'Scan is in progress..', 
-    'Analysing found vulnerabilities..',
-    'Execution completed..',
     'Documenting results and recommendations..', 
    ];
     let messageIndex = 1;
@@ -209,6 +139,7 @@ progressMessage = '';
           }
         });
         this.filteredStaticData = this.staticdata.filter(item => item.status === 'Open');
+        this.filteredScaData = this.scaData;
         this.isScanning = false;
       }
 
@@ -242,9 +173,12 @@ progressMessage = '';
     this.filteredStaticData = this.staticdata.filter(item => {
       return path === item.Scanning;
     });
+    this.filteredScaData = [];
   }
+
   showAllVul(){
     this.filteredStaticData = this.staticdata.filter(item => item.status === 'Open');
+    this.filteredScaData = this.scaData;
     this.fileContent = {};
   }
 
@@ -271,9 +205,57 @@ progressMessage = '';
     }
   }
 
-  ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Apps' }, { label: 'File Manager', active: true }];
+  dastData: any;
+  penTest: any;
+  dynamicData: any;
+
+
+getDastData() {
+  this.http.get('assets/data/dast.json').subscribe(data => {
+    this.dastData = data;
+ 
+  });
+}
+
+getPenTestData() {
+  this.http.get('assets/data/pentest.json').subscribe(data => {
+    this.penTest = data;
+   
+  });
+}
+
+getSCAData() {
+  this.http.get('assets/data/sca.json').subscribe(data => {
+    this.scaData = data;
+    this.filteredScaData = this.scaData;
+  });
+}
+
+getSASTData() {
+  this.http.get('assets/data/sast.json').subscribe(data => {
+    this.staticdata = data;
     this.filteredStaticData = this.staticdata;
+   
+   
+  });
+}
+getDynamicData() {
+  this.http.get('assets/data/dynamic.json').subscribe(data => {
+    this.dynamicData = data;
+ 
+   
+  });
+}
+
+  ngOnInit(): void {
+    
+    this.getDastData();
+    this.getPenTestData();
+    this.getSCAData();
+    this.getSASTData();
+    this.getDynamicData();
+    this.breadCrumbItems = [{ label: 'Apps' }, { label: 'File Manager', active: true }];
+  
     this.getRepoContent().subscribe(data => {
       this.files = data;
       this.folders = Object.entries(this.files)
@@ -293,6 +275,7 @@ progressMessage = '';
         
         this.getFileData(this.folders[0].name+'/'+this.folders[0].files[0]);
       } */
+
     });
  
     
@@ -348,5 +331,4 @@ progressMessage = '';
     }
   }
 
- 
 }
