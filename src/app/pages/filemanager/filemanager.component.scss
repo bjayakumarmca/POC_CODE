@@ -26,3 +26,28 @@
     text-align: right;
     color: #999;
 }
+
+.scrollable {
+    max-height: 74vh; /* 100% of the viewport height */
+    overflow-y: auto;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  .avatar-line {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    padding: 2px;
+  }
+
+  .top-contributor{
+    margin-top: -20px;
+  }

@@ -2,17 +2,18 @@
   
 
     <div class="d-xl-flex">
-        <div class="w-100">
-            <div class="d-md-flex">
-                <div class="card filemanager-sidebar me-md-2">
-                    <div class="card-body">
+        <div class="w-100" >
+            <div class="d-md-flex" >
+                <div class="card filemanager-sidebar me-md-2 h-100"   >
+                    <div class="card-body" >
 
                         <div class="d-flex flex-column h-100">
-                            <div class="mb-4">
+                            <div class="mb-4" style="height: 80vh">
                                 <div class="mb-3">
                                     <div class="dropdown" dropdown>
                                         <button class="btn btn-light dropdown-toggle w-100" dropdownToggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                             Repo Name
+                                    vul-scan-repo
+
                                         </button>
                                         <div class="dropdown-menu" *dropdownMenu>
                                             <a class="dropdown-item" href="javascript: void(0);"><i class="bx bx-folder me-1"></i> Folder</a>
@@ -22,7 +23,13 @@
                                         
                                     </div>
                                 </div>
-                                <ul class="list-unstyled categories-list">
+                                <div *ngIf="isLoading" class="progress" style="background-color: transparent;margin-top: 250px;overflow: visible;text-align: center;font-size: 18px;margin-left: 10%;">
+                                    <div class="spinner-border" role="status" style="overflow: visible;">
+                                        <span class="sr-only" style="color: blue;overflow: visible;margin-left: 5px;"> Loading...</span>
+                                      </div>
+                                      <p class="loading-text">&nbsp;&nbsp;Loading Repo...</p>
+                                  </div>
+                                <ul  *ngIf="!isLoading" class="list-unstyled categories-list scrollable" >
                                     <li *ngFor="let folder of folders">
                                         <div class="custom-accordion">
                                             <a class="text-body fw-medium py-1 d-flex align-items-center" *ngIf="folder.name !=''" (click)="folder.isCollapsed = !folder.isCollapsed" [attr.aria-expanded]="!folder.isCollapsed" data-toggle="collapse" href="javascript:void(0);" role="button" aria-expanded="false" aria-controls="categories-collapse">
@@ -49,13 +56,39 @@
                 </div>
                 <!-- filemanager-leftsidebar -->
 
-                <div class="w-100">
+                <div class="w-100" style="height: 87vh">
 
 
 
+                    <div class="card text-center" *ngIf="!showScanResults"  style="height: 87vh">
+                        <div class="card-header" style="padding: 20px;font-size: 18px;background-color: #2A3042;color: #ffffff;">
+                          Welcome to our AI-powered Security Tool
+                        </div>
+                        <div class="card-body" style="padding:14% ;">
+                          <h5 class="card-title">Run Various Types of Scans</h5>
+                          <p class="card-text">
+                            This tool can help you run various types of scans like Static, Dynamic, Penetration Testing, etc. It can even help and recommend you to fix the vulnerabilities using AI.
+                          </p>
+                          <p class="card-text">
+                            Once the vulnerabilities are fixed, you can commit the code to your repo and re-run the scan. This makes the process of securing your codebase easier and more efficient.
+                          </p>
+                          <button class="btn btn-primary" [disabled]="isScanning" (click)="startScanning()">Start Scanning</button>
+                          <div *ngIf="isScanning">
+                            <div class="progress" style="margin-top: 60px;font-size: 28px;height: 24px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="progress + '%'">
+                                </div>
+                              </div>
+                            <label style="margin-top: 20px;color: green;font-size: 16px;">{{progressMessage}}</label>
+                          </div>
+
+                        </div>
+                        <div class="card-footer text-muted" style="padding: 20px;font-size: 16px;">
+                            Secure your codebase with the power of AI
+                          </div>
+                      </div>
 
 
-                    <div class="card" >
+                    <div class="card"   *ngIf="showScanResults">
                         <div class="card-body" >
                             <div *ngIf="fileContent && fileContent['path']">
                                 <div class="row mb-3" >
@@ -68,12 +101,11 @@
                                         <form class="mt-4 mt-sm-0 float-sm-end d-flex align-items-center">
                                             <div class="search-box mb-2 me-2">
                                                 <div class="position-relative">
-                                                    <input type="text" class="form-control bg-light border-light rounded" placeholder="Search...">
-                                                    <i class="bx bx-search-alt search-icon"></i>
+                                                    <button class="btn btn-light ms-0" type="button" id="password-addon"(click)="showAllVul()" >Show All Vulnerabilties</button>
                                                 </div>
                                             </div>
 
-                                            <div class="dropdown mb-0" dropdown>
+                            <!--                 <div class="dropdown mb-0" dropdown>
                                                 <a class="btn btn-link text-muted dropdown-toggle mt-n2" dropdownToggle role="button" data-toggle="dropdown" aria-haspopup="true">
                                                     <i class="mdi mdi-dots-vertical font-size-20"></i>
                                                 </a>
@@ -83,15 +115,25 @@
                                                     <a class="dropdown-item" href="javascript: void(0);">Share with me</a>
                                                     <a class="dropdown-item" href="javascript: void(0);">Other Actions</a>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </form>
                                     </div>
                                 </div>
                             </div>
                             <div *ngIf="fileContent && fileContent['path']">
-                                <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
-                                    <pre class="line-numbers" [innerHTML]="fileContent['content']"></pre>
+                                <div class="row file-content" style="min-height: 300px;max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                    <pre class="line-numbers" [innerHTML]="displayedContent"></pre>
                                 </div>
+                                <br>
+                                <p *ngIf="commit && commit===true">Do you want to commit the changes and push to the repository and rerun the SCANS? <button (click)="commitChanges();" class="btn btn-success" style="font-size: 12px;" type="button" id="password-addon">  <i class="bx bxs-magic-wand"></i> Commit & Run</button></p>
+                                
+                                <div *ngIf="isScanning">
+                                    <div class="progress" style="margin-top: 60px;font-size: 28px;height: 24px;">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="progress + '%'">
+                                        </div>
+                                      </div>
+                                    <label style="margin-top: 20px;color: green;font-size: 16px;">{{progressMessage}}</label>
+                                  </div>
                             </div>
 
                             <div class="mt-4">
@@ -106,23 +148,27 @@
 
 
                                 <div class="col-xl-12 col-lg-12">
-                                    <div class="card">
+
+
+                                     
+                                    <div class="card" *ngIf="showScanResults" [@slideIn]>
                                         <div class="card-body">
                                             <div class="d-flex flex-wrap align-items-start">
                                                 <div class="me-2">
-                                                    <h5 class="card-title mb-0">Scan Results</h5>
+                                                    <h5 class="card-title mb-0">Scan Results (Open Vulnerablilities)</h5>
                                                 </div>
                                                 <div class="ms-auto">
                         
                                                 </div>
                                             </div>
                                             <tabset class="nav-tabs nav-tabs-custom card-header-tabs custom-widget-nav ms-auto">
-                                                <tab heading="Static" class="mt-4">
-                                                    <ngx-simplebar style="max-height: 500px;">
+                                                <tab heading="Static (SAST & SCA)" class="mt-4">
+                                                  
+                                                    <ngx-simplebar style="max-height: 600px;">
+                                                        <h4>SAST SCAN Results</h4>
                                                         <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item py-3" *ngFor="let data of staticdata; let i = index">
-                                                                <div class="d-flex">
-                                                                   
+                                                            <li class="list-group-item py-3" *ngFor="let data of filteredStaticData; let i = index">
+                                                                <div class="d-flex">                
                                                                     <div class="align-self-center overflow-hidden me-auto">
                                                                         <div>
                                                                             <h5 class="font-size-14 text-truncate"><a href="javascript: void(0);" class="text-dark">
@@ -135,12 +181,51 @@
                                                                             </div>
 
                                                                             <p> Recommended fix</p>
-                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
-                                                                                <pre class="line-numbers" [innerHTML]="data.recommended_code_fix"></pre>
+                                                                            <div class="row file-content" style="max-height: 450px; overflow-y: auto;">
+                                                                                <pre class="line-numbers" [innerHTML]="data.recommendations"></pre>
                                                                             </div>
+                                                                            <br>
+                                                                            File Name : <label (click)="getFileData(data['Scanning'],id)" style="color: #3f09f1;text-decoration: underline;cursor: pointer;">{{data['Scanning']}}</label>
                                                                         </div>
                                                                     </div>
-                        
+                                                                    <div class="ms-auto" *ngIf="data.autoFixed && data.autoFixed ==='false'">
+                                                                        <div class="overflow-hidden me-auto" style="text-align: center; margin-top: 10%;">
+                                                                            <apx-chart dir="ltr" class="apex-charts" [chart]="radialoptions.chart" [series]="data.confidence" [labels]="radialoptions.labels" [colors]="radialoptions.colors" [grid]="radialoptions.grid" [plotOptions]="radialoptions.plotOptions" [stroke]="radialoptions.stroke">
+                                                                            </apx-chart>
+                                                                            <p class="text-muted mt-4">Fix Confidence Score</p>
+                                                                            <button (click)="autofix(data.id , data.recommendations)" class="btn btn-success" style="font-size: 12px;" type="button" id="password-addon">  <i class="bx bxs-magic-wand"></i> Auto Fix</button>
+                                                                        </div>        
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <hr>
+                                                          
+                                                            <li class="list-group-item py-3" *ngFor="let data of filteredScaData; let i = index">
+                                                                <h4>SCA SCAN Results</h4>
+                                                                <div class="d-flex">
+                                                                   
+                                                                    <div class="align-self-center overflow-hidden me-auto">
+                                                                        <div>
+                                                                            <h5 class="font-size-14 text-truncate"><a href="javascript: void(0);" class="text-dark">
+                                                                                Vulnerability ID : {{data['Vulnerability ID']}}</a>
+                                                                            </h5>
+                                                                            <p class="text-muted mb-0">Affected Spec: {{data['Affected Spec']}}</p>
+                                                                            <br>
+                                                                            <p> CVE </p>
+                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                                                                <pre class="line-numbers" [innerHTML]="data.CVE"></pre>
+                                                                            </div>
+                                                                            <br>
+                                                                            <p> Advisory</p>
+                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                                                                <pre class="line-numbers" [innerHTML]="data.Advisory"></pre>
+                                                                            </div>
+                                                                            <br>
+                                                                            <p> More Info : </p><a style="color: #3f09f1;text-decoration: underline;">{{data['More Info URL']}}</a>
+                                                                        </div>
+                                                                    </div>
+                                                                
+                                                                    
                                                                     <div class="dropdown ms-2" dropdown>
                                                                         <a class="text-muted font-size-14" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
                                                                             <i class="mdi mdi-dots-horizontal"></i>
@@ -164,30 +249,34 @@
                                                         </ul>
                                                     </ngx-simplebar>
                                                 </tab>
+
                                                 <tab heading="Dynamic" class="mt-4">
-                                                    <ngx-simplebar style="height: 500px;">
+                                                    <ngx-simplebar style="height: 600px;">
                                                         <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item py-3" *ngFor="let data of staticdata; let i = index">
+                                                            <li class="list-group-item py-3" *ngFor="let data of dynamicData; let i = index">
                                                                 <div class="d-flex">
                                                                    
                                                                     <div class="align-self-center overflow-hidden me-auto">
                                                                         <div>
                                                                             <h5 class="font-size-14 text-truncate"><a href="javascript: void(0);" class="text-dark">
-                                                                                {{data.issue_type}}</a>
+                                                                                Issue Type : {{data['issue_type']}}</a>
                                                                             </h5>
-                                                                            <p class="text-muted mb-0">Line no. {{data.line_number}}</p>
-                                                                            <p> Code with issue </p>
+                                                                            <p class="text-muted mb-0">Line no: {{data['line_number']}}</p>
+                                                                            <br>
+                                                                            <p> Affected Code : </p>
                                                                             <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
-                                                                                <pre class="line-numbers" [innerHTML]="data.code_snippet"></pre>
+                                                                                <pre class="line-numbers" [innerHTML]="data['code_snippet']"></pre>
                                                                             </div>
-
-                                                                            <p> Recommended fix</p>
+                                                                            <br>
+                                                                            <p> Recommended Fix</p>
                                                                             <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
-                                                                                <pre class="line-numbers" [innerHTML]="data.recommended_code_fix"></pre>
+                                                                                <pre class="line-numbers" [innerHTML]="data['recommended_code_fix']"></pre>
                                                                             </div>
+                                                                         
                                                                         </div>
                                                                     </div>
-                        
+                                                             
+                                                                    
                                                                     <div class="dropdown ms-2" dropdown>
                                                                         <a class="text-muted font-size-14" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
                                                                             <i class="mdi mdi-dots-horizontal"></i>
@@ -207,6 +296,98 @@
                                                             </li>
                                                            
                                                         </ul>
+                                                    </ngx-simplebar>
+                                                </tab>
+                                                <tab heading="DAST" class="mt-4">
+                                                    <ngx-simplebar style="height: 600px;">
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item py-3" *ngFor="let data of dastData; let i = index">
+                                                                <div class="d-flex">
+                                                                   
+                                                                    <div class="align-self-center overflow-hidden me-auto">
+                                                                        <div>
+                                                                            <h5 class="font-size-14 text-truncate" style="display: flex; align-items: center;">
+                                                                                <a href="javascript: void(0);" class="text-dark">Issue Type : {{data['issueType']}}</a>
+                                                                                <div style="width: 20px; height: 20px; background-color: rgb(242, 101, 101); border-radius: 50%; display: flex; justify-content: center; align-items: center; margin-left: 10px;">
+                                                                                  <label style="color: white;margin-top: 6px;">{{data['severity']}}</label>
+                                                                                </div>
+                                                                              </h5>
+                                                                            <p class="text-muted mb-0">Issue Count: {{data['numberOfIssues']}}</p>
+                                                                            <br>
+                                                                            <p> Cause </p>
+                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                                                                <pre class="line-numbers" [innerHTML]="data.cause"></pre>
+                                                                            </div>
+                                                                            <br>
+
+                                                                            <h5 class="font-size-14 text-truncate" style="font-size: 12px;"><a href="javascript: void(0);" class="text-dark">
+                                                                                Action : {{data['action']}}</a>
+                                                                             </h5>
+                                                                             <br>
+                                                                            <p> Fix</p>
+                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                                                                <pre class="line-numbers" [innerHTML]="data.fix"></pre>
+                                                                            </div>
+                                                                            <br>
+
+                                                                            <h5 class="font-size-12 text-truncate" style="color: red;font-size: 12px;"><a href="javascript: void(0);" class="text-dark">
+                                                                              Risk : {{data['risk']}}</a>
+                                                                             </h5>
+                                                                            <p> URL : </p><a style="color: #3f09f1;text-decoration: underline;">{{data['url']}}</a>
+                                                                        </div>
+                                                                    </div>
+                                                             
+                                                                    
+                                                                    <div class="dropdown ms-2" dropdown>
+                                                                        <a class="text-muted font-size-14" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
+                                                                            <i class="mdi mdi-dots-horizontal"></i>
+                                                                        </a>
+                        
+                                                                        <div class="dropdown-menu dropdown-menu-end" *dropdownMenu>
+                                                                            <a class="dropdown-item" href="javascript:void(0);">Action</a>
+                                                                            <a class="dropdown-item" href="javascript:void(0);">Another
+                                                                                action</a>
+                                                                            <a class="dropdown-item" href="javascript:void(0);">Something
+                                                                                else
+                                                                                here</a>
+                                                                        </div>
+                                                                    </div>
+                        
+                                                                </div>
+                                                            </li>
+                                                           
+                                                        </ul>
+                                                    </ngx-simplebar>
+                                                </tab>
+                   
+
+                                                <tab heading="PEN TEST" class="mt-4">
+                                                    <ngx-simplebar style="height: 600px;">
+                                                        
+                                                        <div style="overflow-x: auto;">
+                                                            <table class="table mb-0" style="width: 100%; table-layout: fixed;">
+                                                              <colgroup>
+                                                                <col style="width: 65%;">
+                                                                <col style="width: 25%;">
+                                                                <col style="width: 10%;">
+                                                              </colgroup>
+                                                              <thead class="thead-dark">
+                                                                <tr>
+                                                                  <th>URL</th>
+                                                                  <th>Vulnerability</th>
+                                                                  <th>Details</th>
+                                                                </tr>
+                                                              </thead>
+                                                              <tbody>
+                                                                <tr *ngFor="let user of penTest">
+                                                                  <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{user.URL}}</td>
+                                                                  <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{user.Vulnerability}}</td>
+                                                                  <td style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{user.Details}}</td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </div>
+                                                           
                                                     </ngx-simplebar>
                                                 </tab>
                                             </tabset>
@@ -244,35 +425,111 @@
             </div>
         </div>
 
-        <div class="card filemanager-sidebar ms-lg-2">
-            <div class="card-body">
-                <div class="text-center">
+        <div class="card filemanager-sidebar ms-lg-2" >
+
+            <div *ngIf="!showScanResults">
+                <button class="btn btn-light dropdown-toggle w-100" type="button" aria-haspopup="true" aria-expanded="false">
+                  TOP CONTRIBUTORS
+
+                        </button>
+           
+                   
+                        <div class="card top-contributor" style="width: 18rem;margin-top: 0px;">
+                            <div class="card-body">
+                              <div class="avatar-line">
+                                <div class="avatar" style="background-color: rgb(15, 51, 232);color: rgb(255, 255, 255);">
+                                  A
+                                </div>
+                                <span style="margin-left: 8px;">Amit Mehta</span>
+                              </div>
+                             
+                              
+                            </div>
+                           
+                          </div>
+                       
+      
+
+                        <div class="card top-contributor" style="width: 18rem;">
+                            <div class="card-body">
+                              <div class="avatar-line">
+                                <div class="avatar" style="background-color: rgb(154, 236, 198);color: rgb(7, 7, 7);">
+                                    J
+                                     </div>
+                                     <span style="margin-left: 8px;">Jaykumar Babu</span>
+                              </div>
+                           
+                              
+                            </div>
+                           
+                          </div>
+                       
+         
+
+                        <div class="card top-contributor" style="width: 18rem;">
+                            <div class="card-body">
+                              <div class="avatar-line">
+                                <div class="avatar" style="background-color: rgb(250, 116, 7);color: rgb(255, 255, 255);">
+                                    R
+                                     </div>
+                                     <span style="margin-left: 8px;">Ruvend Subramani</span>
+                              </div>
+                            
+                        
+                              
+                            </div>
+                           
+                          </div>
+
+                       
+                  
+
+                        <div class="card top-contributor" style="width: 18rem;">
+                            <div class="card-body">
+                              <div class="avatar-line">
+                                <div class="avatar" style="background-color: rgb(250, 7, 213);color: rgb(44, 43, 43);">
+                                    R
+                                      </div>
+                                      <span style="margin-left: 8px;">Raja Narayanan</span>
+                              </div>
+                              
+                               
+                              
+                            </div>
+                           
+                          </div>
+          
+            </div>
+          
+         
+            <div class="card-body" *ngIf="showScanResults">
+              <!--   <div class="text-center">
                     <h5 class="font-size-15 mb-4">Confidence Score</h5>
-                    <!-- <div class="apex-charts" id="radial-chart"></div> -->
+                 
                     <apx-chart dir="ltr" class="apex-charts" [chart]="radialoptions.chart" [series]="radialoptions.series" [labels]="radialoptions.labels" [colors]="radialoptions.colors" [grid]="radialoptions.grid" [plotOptions]="radialoptions.plotOptions" [stroke]="radialoptions.stroke">
                     </apx-chart>
 
                     <p class="text-muted mt-4">258 lines of Vulnerable code of 15,00,000 lines code</p>
-                </div>
+                </div> -->
 
                 <div class="mt-4">
                     <div class="card border shadow-none mb-2">
+                        <button class="btn btn-light dropdown-toggle w-100" type="button" aria-haspopup="true" aria-expanded="false">
+                           SCAN Highlights
+          
+                                  </button>
                         <a href="javascript: void(0);" class="text-body">
                             <div class="p-2">
                                 <div class="d-flex">
-                                    <div class="avatar-xs align-self-center me-2">
-                                        <div class="avatar-title rounded bg-transparent text-success font-size-20">
-                                            <i class="mdi mdi-image"></i>
-                                        </div>
-                                    </div>
+                                 
 
                                     <div class="overflow-hidden me-auto">
-                                        <h5 class="font-size-13 text-truncate mb-1">Static</h5>
-                                        <p class="text-muted text-truncate mb-0">176 Vul</p>
+                                        <h5 class="font-size-13 text-truncate mb-1">Static Vulnerabilities</h5>
+                                       
                                     </div>
 
                                     <div class="ms-2">
-                                        <p class="text-muted">6 GB</p>
+                                        <p class="text-muted text-truncate mb-0">{{this.filteredStaticData.length + this.scaData.length}} </p>
                                     </div>
                                 </div>
                             </div>
@@ -283,19 +540,33 @@
                         <a href="javascript: void(0);" class="text-body">
                             <div class="p-2">
                                 <div class="d-flex">
-                                    <div class="avatar-xs align-self-center me-2">
-                                        <div class="avatar-title rounded bg-transparent text-danger font-size-20">
-                                            <i class="mdi mdi-play-circle-outline"></i>
-                                        </div>
-                                    </div>
+                                  
 
                                     <div class="overflow-hidden me-auto">
-                                        <h5 class="font-size-13 text-truncate mb-1">Dynamic</h5>
-                                        <p class="text-muted text-truncate mb-0">45 Vul</p>
+                                        <h5 class="font-size-13 text-truncate mb-1">Dynamic Vulnerabilities</h5>
+                                        
                                     </div>
 
                                     <div class="ms-2">
-                                        <p class="text-muted">4.1 GB</p>
+                                        <p class="text-muted text-truncate mb-0">{{this.dynamicData.length}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card border shadow-none mb-2">
+                        <a href="javascript: void(0);" class="text-body">
+                            <div class="p-2">
+                                <div class="d-flex">
+                                  
+
+                                    <div class="overflow-hidden me-auto">
+                                        <h5 class="font-size-13 text-truncate mb-1">DAST SCAN</h5>
+                                        
+                                    </div>
+
+                                    <div class="ms-2">
+                                        <p class="text-muted text-truncate mb-0">{{this.dynamicData.length}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -306,24 +577,21 @@
                         <a href="javascript: void(0);" class="text-body">
                             <div class="p-2">
                                 <div class="d-flex">
-                                    <div class="avatar-xs align-self-center me-2">
-                                        <div class="avatar-title rounded bg-transparent text-info font-size-20">
-                                            <i class="mdi mdi-folder"></i>
-                                        </div>
-                                    </div>
+                                  
 
                                     <div class="overflow-hidden me-auto">
-                                        <h5 class="font-size-13 text-truncate mb-1">Other</h5>
-                                        <p class="text-muted text-truncate mb-0">21 Vul</p>
+                                        <h5 class="font-size-13 text-truncate mb-1">Pen Test vuln</h5>
+                                        
                                     </div>
 
                                     <div class="ms-2">
-                                        <p class="text-muted">3.2 GB</p>
+                                        <p class="text-muted text-truncate mb-0">None</p>
                                     </div>
                                 </div>
                             </div>
                         </a>
                     </div>
+
 
                 </div>
             </div>

@@ -1,0 +1,16 @@
+[
+    {
+      "Vulnerability ID": "71064",
+      "Affected Spec": "<2.32.2",
+      "Advisory": "Affected versions of Requests, when making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same host will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool. Requests 2.32.0 fixes the issue, but versions 2.32.0 and 2.32.1 were yanked due to conflicts with CVE-2024-35195 mitigation.",
+      "CVE": "CVE-2024-35195",
+      "More Info URL": "https://data.safetycli.com/v/71064/97c"
+    },
+    {
+      "Vulnerability ID": "71609",
+      "Affected Spec": "<0.1.30",
+      "CVE": "CVE-2024-35199",
+      "Advisory": "LangChain affected versions allows directory traversal by an actor who is able to control the final part of the path parameter in a load_chain call. This bypasses the intended behavior of loading configurations only from the hwchase17/langchain-hub GitHub repository. The outcome can be disclosure of an API key for a large language model online service, or remote code... CVE-2024-28088",
+      "More Info URL": "https://data.safetycli.com/v/71609/97c"
+    }
+  ]

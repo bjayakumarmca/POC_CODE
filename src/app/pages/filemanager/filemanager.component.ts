@@ -5,12 +5,29 @@ import { RootReducerState } from 'src/app/store';
 import { selectData } from 'src/app/store/filemanager/filemanager-selector';
 import { fetchRecentFilesData } from 'src/app/store/filemanager/filemanager.actions';
 import { HttpClient ,HttpHeaders} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-filemanager',
   templateUrl: './filemanager.component.html',
-  styleUrls: ['./filemanager.component.scss']
+  styleUrls: ['./filemanager.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('2000ms', style({ opacity: 1 })),
+      ]),
+    ]),
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('500ms', style({ transform: 'translateY(0)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms', style({ transform: 'translateY(-100%)' })),
+      ]),
+    ])
+  ]
 })
 export class FilemanagerComponent implements OnInit {
   // bread crumb items
@@ -22,64 +39,115 @@ export class FilemanagerComponent implements OnInit {
   files = {};
   folders = [];
   fileContent = {};
+  isLoading = true;
+  showScanResults = false;
+  staticdata: any = [];
 
-  staticdata = [{
-    "line_number": "6, 10, 14",
-    "issue_type": "Path Traversal",
-    "code_snippet": "entry.ExtractToFile(Path.Combine(extractPath, entry.FullName));",
-    "recommended_code_fix": "Validate and sanitize 'zipPath' and 'extractPath' to prevent path traversal vulnerabilities."
-   },
-   {
-    "line_number": "6",
-    "issue_type": "SQL Injection",
-    "code_snippet": "User ID and Password concatenation in connection string",
-    "recommended_code_fix": "Use parameterized queries or stored procedures to prevent SQL injection."
-   },
-   {
-      "line_number": "5",
-      "issue_type": "SQL Injection",
-      "code_snippet": "String url = \"jdbc:mysql://10.12.1.34/\" + request.getParameter(\"selectedDB\");",
-      "recommended_code_fix": "Use a prepared statement or sanitize the input to prevent SQL injection."
-   },
-   {
-    "line_number": "7, 10",
-    "issue_type": "Local File Inclusion (LFI)",
-    "code_snippet": "$_GET['file']",
-    "recommended_code_fix": "Validate the input file against a whitelist of allowed files or use an absolute path."
-   },
-   {
-    "line_number": "9, 11",
-    "issue_type": "Local File Inclusion",
-    "code_snippet": "$file = str_replace('../', '', $_POST['file']); include(\"pages/$file\");",
-    "recommended_code_fix": "Use a whitelist of allowed files instead of directly including user input."
-   },
-   {
-      "line_number": "8",
-      "issue_type": "Local File Inclusion (LFI)",
-      "code_snippet": "// include(\includes/.$_GET['library']..php\);",
-      "recommended_code_fix": "// Validate the input and use a whitelist of allowed libraries."
-   }
-   ];
+  scaData: any = [];
+  filteredStaticData =[];
+  filteredScaData = [];
 
-  dynamicData = [
-    {
-      "Vulnerability ID": "71064",
-      "Affected Spec": "<2.32.2",
-      "Advisory": "Affected versions of Requests, when making requests through a Requests `Session`, if the first request is made with `verify=False` to disable cert verification, all subsequent requests to the same host will continue to ignore cert verification regardless of changes to the value of `verify`. This behavior will continue for the lifecycle of the connection in the connection pool. Requests 2.32.0 fixes the issue, but versions 2.32.0 and 2.32.1 were yanked due to conflicts with CVE-2024-35195 mitigation.",
-      "CVE": "CVE-2024-35195",
-      "More Info URL": 'https://data.safetycli.com/v/71064/97c'
-    },
-    {
-      "Vulnerability found in l": "angchain-core version 0.1.12",
-      "Vulnerability ID": "71609",
-      "Affected spec": "<0.1.30",
-      "ADVISORY": "LangChain affected versions allows directory traversal by an actor who is able to control the final part of the path parameter in a load_chain call. This bypasses the intended behavior of loading configurations only from the hwchase17/langchain-hub GitHub repository. The outcome can be disclosure of an API key for a large language model online service, or remote code... CVE-2024-28088",
-      "For more information about this vulnerability": "visit https://data.safetycli.com/v/71609/97c"
-    }
-  ];
-
+  isScanning = false;
+progress = 0;
+progressMessage = '';
   constructor(public router: Router,private http: HttpClient, private store: Store<{ data: RootReducerState }>) {
   }
+
+ 
+  startScanning() {
+    this.isScanning = true;
+    this.progress = 0;
+    this.progressMessage = 'Starting scan...';
+
+    const messages = [
+    'Scanning for vulnerabilities..',
+    'Static Scan is in progress..', 
+    'Analysing found vulnerabilities..',
+    'Static Scan is Completed.. & Dynamic Scan started..', 
+    'Dynamic Scan is in progress..',  
+    'Dynamic Scan is Completed.',
+    'Penetration testing execution started..', 
+    'Almost done with penetration testing..',
+    'Execution completed..',
+    'Documenting results and recommendations..', 
+   ];
+    let messageIndex = 1;
+
+    const interval = setInterval(() => {
+      this.progress += 10;
+      this.progressMessage = `${messages[messageIndex]}`;
+
+      if (this.progress >= 100) {
+        clearInterval(interval);
+        this.progressMessage = 'Scan completed';
+        this.showScanResults = true;
+        this.isScanning = false;
+      }
+
+      messageIndex = (messageIndex + 1);
+    }, 10);
+  }
+  autoFixDone = false;
+  typingSpeed = 1; // Speed in milliseconds
+  displayedContent = '';
+  selectedId = 0;
+  commit = false;
+
+  typeFileContent() {
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < this.fileContent['content'].length) {
+        this.displayedContent += this.fileContent['content'][i];
+        i++;
+      } else {
+        clearInterval(interval);
+        this.commit = true;
+      }
+    }, this.typingSpeed);
+  } 
+
+  commitChanges(){
+
+    this.isScanning = true;
+    this.progress = 0;
+    this.progressMessage = 'Starting Process...';
+
+    const messages = [
+      'Committing changes..',
+      "Pushing changes to the repository..",
+    'Scanning the code for vulnerabilities..',
+    'Scan is in progress..', 
+    'Documenting results and recommendations..', 
+   ];
+    let messageIndex = 1;
+
+    const interval = setInterval(() => {
+      this.progress += 20;
+      this.progressMessage = `${messages[messageIndex]}`;
+
+      if (this.progress >= 100) {
+        clearInterval(interval);
+        this.progressMessage = 'Scan completed';
+        this.showScanResults = true;
+        this.commit = false;
+        this.autoFixDone = false;
+        this.displayedContent = '';
+        this.fileContent = {};
+        this.staticdata.forEach(item => {
+          if (item.id === this.selectedId) {
+            item.status = 'Closed';
+          }
+        });
+        this.filteredStaticData = this.staticdata.filter(item => item.status === 'Open');
+        this.filteredScaData = this.scaData;
+        this.isScanning = false;
+      }
+
+      messageIndex = (messageIndex + 1);
+    }, 1000);
+  
+  }
+  
   getRepoContent(): Observable<any> {
     return this.http.get<any>(`http://localhost:3000/api/repo`);
   }
@@ -87,22 +155,107 @@ export class FilemanagerComponent implements OnInit {
   getFileContent(path): Observable<any> {
     return this.http.get<any>(`http://localhost:3000/api/file?path=${path}`);
   }
-  
-  getFileData(path){
+
+  getFileData(path, id){
     console.log(path);
+    this.selectedId = id;
+    console.log('Selected ID: ', this.selectedId);
     this.getFileContent(path).subscribe(data => {
       
       this.fileContent = data;
       let content = this.fileContent['content'];
       let lines = content.split('\n');
       this.fileContent['content'] = lines.map((line, index) => `<span class="line">${index + 1} ${line}</span>`).join('\n');
+      this.displayedContent = this.fileContent['content'];
     });
-  }
+    
   
+    this.filteredStaticData = this.staticdata.filter(item => {
+      return path === item.Scanning;
+    });
+    this.filteredScaData = [];
+  }
+
+  showAllVul(){
+    this.filteredStaticData = this.staticdata.filter(item => item.status === 'Open');
+    this.filteredScaData = this.scaData;
+    this.fileContent = {};
+  }
+
+
+  autofix(id, recommendations) {
+    console.log('Auto Fixing issue: ', recommendations);
+    this.displayedContent = '';
+    this.selectedId = id;
+    if (recommendations.includes('Replace') && recommendations.includes('gets') && recommendations.includes('fgets')) {
+      let code = this.fileContent['content'];
+      let line = this.fileContent['line_number'];
+      let newCode = code.replace('gets', 'fgets');
+      this.fileContent['content'] = newCode;
+      console.log('Auto Fix Done');
+      this.autoFixDone = true;
+      this.typeFileContent();
+
+      // Update autofix flag in staticData where id matches
+      this.filteredStaticData.forEach(item => {
+        if (item.id === id) {
+          item.autoFixed = 'true';
+        }
+      });
+    }
+  }
+
+  dastData: any;
+  penTest: any;
+  dynamicData: any;
+
+
+getDastData() {
+  this.http.get('assets/data/dast.json').subscribe(data => {
+    this.dastData = data;
+ 
+  });
+}
+
+getPenTestData() {
+  this.http.get('assets/data/pentest.json').subscribe(data => {
+    this.penTest = data;
+   
+  });
+}
+
+getSCAData() {
+  this.http.get('assets/data/sca.json').subscribe(data => {
+    this.scaData = data;
+    this.filteredScaData = this.scaData;
+  });
+}
+
+getSASTData() {
+  this.http.get('assets/data/sast.json').subscribe(data => {
+    this.staticdata = data;
+    this.filteredStaticData = this.staticdata;
+   
+   
+  });
+}
+getDynamicData() {
+  this.http.get('assets/data/dynamic.json').subscribe(data => {
+    this.dynamicData = data;
+ 
+   
+  });
+}
 
   ngOnInit(): void {
+    
+    this.getDastData();
+    this.getPenTestData();
+    this.getSCAData();
+    this.getSASTData();
+    this.getDynamicData();
     this.breadCrumbItems = [{ label: 'Apps' }, { label: 'File Manager', active: true }];
-
+  
     this.getRepoContent().subscribe(data => {
       this.files = data;
       this.folders = Object.entries(this.files)
@@ -116,12 +269,13 @@ export class FilemanagerComponent implements OnInit {
           if (b.name === '') return -1; // Empty folders should be at the end
           return a.name.localeCompare(b.name); // Sort folders in ascending order based on the key
         });
-
+        this.isLoading = false;
    /*    
       if (this.folders && this.folders.length > 0) {
         
         this.getFileData(this.folders[0].name+'/'+this.folders[0].files[0]);
       } */
+
     });
  
     
@@ -177,5 +331,4 @@ export class FilemanagerComponent implements OnInit {
     }
   }
 
- 
 }
