@@ -19,9 +19,14 @@
               </h5>
               <p class="text-muted mb-4">{{descript}}</p>
               <div class="avatar-group">
-                <div class="avatar-group-item">
+                <div class="avatar-group-item" title="Amit Mehta" tooltip="Amit Mehta">
                   <a href="javascript: void(0);" class="d-inline-block">
-                    <img src="assets/images/usr/avatar3.jpeg" class="rounded-circle avatar-xs" alt />
+                    <img src="assets/images/usr/user.png" class="rounded-circle avatar-xs" alt />
+                  </a>
+                </div>
+                <div class="avatar-group-item" title="Girish B" tooltip="Girish B">
+                  <a href="javascript: void(0);" class="d-inline-block">
+                    <img src="assets/images/usr/user.png" class="rounded-circle avatar-xs" alt />
                   </a>
                 </div>
               </div>
@@ -65,18 +70,18 @@
               </h5>
               <p class="text-muted mb-4">{{grid.subtext}}</p>
               <div class="avatar-group">
-                <div class="avatar-group-item">
+                <div class="avatar-group-item" title="{{grid.uname[0]}}" tooltip="{{grid.uname[0]}}">
                   <a href="javascript: void(0);" class="d-inline-block">
                     <img src="{{grid.users[0]}}" class="rounded-circle avatar-xs" alt />
                   </a>
                 </div>
                 @if(grid.users[1]){
-                <div class="avatar-group-item">
+                <div class="avatar-group-item" title="{{grid.uname[1]}}" tooltip="{{grid.uname[1]}}">
                   <a href="javascript: void(0);" class="d-inline-block">
                     <img src="{{grid.users[1]}}" class="rounded-circle avatar-xs" alt />
                   </a>
                 </div>}@else if (grid.users[2]) {
-                <div class="avatar-group-item">
+                <div class="avatar-group-item" title="{{grid.uname[2]}}" tooltip="{{grid.uname[2]}}">
                   <a href="javascript: void(0);" class="d-inline-block">
                     <img src="{{grid.users[2]}}" class="rounded-circle avatar-xs" alt />
                   </a>
