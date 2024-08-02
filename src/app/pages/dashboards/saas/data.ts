@@ -21,11 +21,23 @@ const earningLineChart: ChartType = {
     dataLabels: {
         enabled: false
     },
+    xaxis: {
+        //categories: ['1', '3', '6', '8', '14', '20', '21','23','24','26','29','30','31'],
+        title: {
+            text: 'days'
+        }   
+    },
+    yaxis: {
+        title: {
+            text: 'AI Commits'
+        },
+    },
     colors: ['#556ee6'],
     stroke: {
         curve: 'smooth',
         width: 3,
-    },
+    }
+    
 };
 
 const salesAnalyticsDonutChart: ChartType = {
