@@ -9,6 +9,8 @@ export interface ChartType {
     type?: any;
     height?: any;
     dataLabels?: any;
+    xaxis?: any;
+    yaxis?: any;
 }
 
 export interface ChatMessage {
