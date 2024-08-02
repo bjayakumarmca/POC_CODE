@@ -13,16 +13,12 @@ export const MENU: MenuItem[] = [
         link: '/dashboards/saas',
     },
     {
-        id: 3,
-        label: 'MENUITEMS.FILEMANAGER.TEXT',
-        icon: 'bx-file',
-        link: '/filemanager',
-    },
-    {
-        id: 4,
+        id:3,
         label: 'MENUITEMS.PROJECTS.LIST.GRID',
-        icon: 'bx-briefcase-alt-2',
+        icon: 'bx bx-code-alt',
         link: '/projects/grid',
-    }
+    },
+   
+   
 ];
 
