@@ -160,7 +160,7 @@
     "PROJECTS": {
       "TEXT": "Projects",
       "LIST": {
-        "GRID": "Projects Grid",
+        "GRID": "Repositories",
         "PROJECTLIST": "Projects List",
         "OVERVIEW": "Project Overview",
         "CREATE": "Create New"
