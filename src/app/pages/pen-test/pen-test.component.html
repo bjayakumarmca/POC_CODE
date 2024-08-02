@@ -1,31 +1,71 @@
 <div class="container-fluid">
-    <app-page-title title="AI Assistance Penetration Testing"></app-page-title>
+    <app-page-title title="AI Assistance Penetration Testing" [breadcrumbItems]="breadCrumbItems" (newAppCreated)="onNewAppCreated()"></app-page-title>
   
     <div class="row">
-      @for(grid of dataToUse;track $index){
-      <div class=" col-xl-4 col-sm-6" style="cursor: pointer;">
+      <div class=" col-xl-4 col-sm-6" style="cursor: pointer;" *ngIf="isAppCreated === 'yes'">
         <div class="card">
           <div class="card-body">
             <div class="d-flex">
+              <div class="flex-shrink-0 me-4">
+                <div class="avatar-md">
+                  <span class="avatar-title rounded-circle bg-light text-danger font-size-24" style="color:#556ee6 !important">
+                    {{logo}}
+                  </span>
+                </div>
+              </div>
               <div class="flex-grow-1 overflow-hidden">
                 <h5 class="text-truncate font-size-15">
-                  <a href="javascript: void(0);" class="text-dark">{{grid.text}}</a>
+                  <a href="javascript: void(0);" class="text-dark">{{appName}}</a>
                 </h5>
-                <p class="text-muted mb-4">{{grid.subtext}}</p>
+                <p class="text-muted mb-4"><a href="#" (click)="disableLink($event)">{{appUrl}}</a></p>
               </div>
             </div>
           </div>
           <div class="px-4 py-3 border-top">
             <ul class="list-inline mb-0">
               <li class="list-inline-item me-3" title="Test Status" tooltip="Test Status">
-                <span class="badge" [ngClass]="{ 'bg-success': grid.comment <= 100,
-                      'bg-warning': grid.comment > 100 }">{{grid.status}}</span>
+                <span class="badge" [ngClass]="{ 'bg-info': isAppCreated === 'yes',
+                      'bg-warning': isAppCreated === 'no' }">Test Pending</span>
               </li>
-              <!-- <li class="list-inline-item me-3" title="Test Date" tooltip="Test Date">
-                <i class="bx bx-calendar me-1"></i>
-                {{grid.date}}
+              <li class="list-inline-item me-3" title="Test Date" tooltip="Test Date">
+                <span class="badge" [ngClass]="{ 'bg-success': testLevel === 'Easy',
+                      'bg-warning': testLevel === 'Medium' , 'bg-danger': testLevel === 'Hard'} ">{{testLevel}}</span>
               </li>
-              <li class="list-inline-item me-3" title="Results" tooltip="Failed Cases">
+            </ul>
+          </div>
+        </div>
+      </div>
+      @for(grid of dataToUse;track $index){
+      <div class=" col-xl-4 col-sm-6" style="cursor: pointer;">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex">
+              <div class="flex-shrink-0 me-4">
+                <div class="avatar-md">
+                  <span class="avatar-title rounded-circle bg-light text-danger font-size-24" style="color:#556ee6 !important">
+                    {{grid.appname}}
+                  </span>
+                </div>
+              </div>
+              <div class="flex-grow-1 overflow-hidden">
+                <h5 class="text-truncate font-size-15">
+                  <a href="javascript: void(0);" class="text-dark">{{grid.text}}</a>
+                </h5>
+                <p class="text-muted mb-4"><a href="#" (click)="disableLink($event)">{{grid.url}}</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="px-4 py-3 border-top">
+            <ul class="list-inline mb-0">
+              <li class="list-inline-item me-3" title="Test Status" tooltip="Test Status">
+                <span class="badge" [ngClass]="{ 'bg-info': grid.status === 'Test Completed',
+                      'bg-warning': grid.status === 'Pending' }">{{grid.status}}</span>
+              </li>
+              <li class="list-inline-item me-3" title="Test Date" tooltip="Test Date">
+                <span class="badge" [ngClass]="{ 'bg-success': grid.level === 'Easy',
+                      'bg-warning': grid.level === 'Medium' , 'bg-danger': grid.level === 'Hard'} ">{{grid.level}}</span>
+              </li>
+              <!--<li class="list-inline-item me-3" title="Results" tooltip="Failed Cases">
                 <i class="bx bx-shield-quarter me-1"></i>
                 {{grid.comment}}
               </li> -->

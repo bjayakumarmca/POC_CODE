@@ -4,7 +4,7 @@
     <div class="page-title-box d-sm-flex align-items-center justify-content-between">
       <h4 class="mb-0 font-size-18">{{ title }}</h4>
       <div class="page-title-right">
-        <ol class="breadcrumb m-0">
+        <ol class="breadcrumb m-0" *ngIf="title==='Dashboard'">
           @for(item of breadcrumbItems;track $index){
           <ng-container>
             @if(item.active){
@@ -59,6 +59,61 @@
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal" (click)="modalRef.hide()">Close</button>
                     <button type="button" class="btn btn-primary waves-effect waves-light" (click)="createRepo()">Onboard Repository</button>
+                  </div>
+                </ng-template>
+              </div>
+            </li>
+          }
+          </ng-container>
+          }
+        </ol>
+        <ol class="breadcrumb m-0" *ngIf="title==='AI Assistance Penetration Testing'">
+          @for(item of breadcrumbItems;track $index){
+          <ng-container>
+            @if(item.active){
+            <li class="breadcrumb-item active" *ngIf="item.label != 'Projects Grid'">{{ item.label }}
+            </li>
+            }@else{
+            <li class="breadcrumb-item" *ngIf="item.label != 'Projects'"><a href="javascript: void(0);">{{ item.label }}</a>
+            </li>
+            <li class="breadcrumb-item" *ngIf="item.label == 'Projects'" style="cursor: pointer; font-size:16px;">
+              <div>
+                <button type="button" class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#myModal" (click)="openModal(content)">Add new application</button>
+                <ng-template #content role="document" let-modal>
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">New Application</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="modalRef.hide()"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p></p>
+                    <div style="display: flex;">
+                      <div style="width:150px;">
+                        <label for="example-text-input" class="col-form-label">Application Name *</label>
+                      </div>
+                        <div style="margin-left:10px;">
+                          <input class="form-control" type="text" id="appname" style="width:300px" #appname>
+                        </div>
+                    </div>
+                    <div style="display: flex; margin-top:10px;">
+                      <div style="width:150px;">
+                        <label for="example-text-input" class="col-form-label">URL *</label>
+                      </div>
+                        <div style="margin-left:10px;">
+                          <input class="form-control" type="text" id="appurl" style="width:300px" #appurl>
+                        </div>
+                    </div>
+                    <div style="display: flex; margin-top:10px;">
+                      <div style="width:150px;">
+                        <label for="example-text-input" class="col-form-label">Test Level</label>
+                      </div>
+                        <div style="margin-left:10px;">
+                          <input class="form-control" type="text" id="testlevel" style="width:300px" #testlevel>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect" data-bs-dismiss="modal" (click)="modalRef.hide()">Close</button>
+                    <button type="button" class="btn btn-primary waves-effect waves-light" (click)="createApp()">Add Application</button>
                   </div>
                 </ng-template>
               </div>

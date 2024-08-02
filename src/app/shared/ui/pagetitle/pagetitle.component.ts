@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-
 @Component({
   selector: 'app-page-title',
   templateUrl: './pagetitle.component.html',
@@ -12,13 +11,18 @@ export class PagetitleComponent implements OnInit {
   @ViewChild('repourl') myrepourl!: ElementRef;
   @ViewChild('site') mysite!: ElementRef;
   @ViewChild('descript') mydescript!: ElementRef;
+  @ViewChild('appname') appname!: ElementRef;
+  @ViewChild('appurl') appurl!: ElementRef;
+  @ViewChild('testlevel') testlevel!: ElementRef;
   @Output() storageItemCreated = new EventEmitter<void>();
+  @Output() newAppCreated = new EventEmitter<void>();
   @Input() breadcrumbItems;
   @Input() title: string;
 
   constructor(private modalService: BsModalService) { }
 
   ngOnInit() {
+
   }
 
   /**
@@ -38,6 +42,17 @@ export class PagetitleComponent implements OnInit {
     this.modalRef.hide();
     setTimeout(()=>{
       this.storageItemCreated.emit();
+    }, 3000);
+  }
+
+  createApp(){
+    localStorage.setItem('isAppCreated','yes');
+    localStorage.setItem('appname',this.appname.nativeElement.value);
+    localStorage.setItem('appurl',this.appurl.nativeElement.value);
+    localStorage.setItem('testlevel',this.testlevel.nativeElement.value);
+    this.modalRef.hide();
+    setTimeout(()=>{
+      this.newAppCreated.emit();
     }, 3000);
   }
   disableLink(event: Event) {
