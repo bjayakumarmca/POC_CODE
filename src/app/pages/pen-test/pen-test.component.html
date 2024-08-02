@@ -18,9 +18,8 @@
           <div class="px-4 py-3 border-top">
             <ul class="list-inline mb-0">
               <li class="list-inline-item me-3" title="Test Status" tooltip="Test Status">
-                <span class="badge" [ngClass]="{ 'bg-success': grid.comment <= 10,
-                      'bg-warning': grid.comment > 10 && grid.comment <= 20,
-                      'bg-danger': grid.comment > 20 }">{{grid.status}}</span>
+                <span class="badge" [ngClass]="{ 'bg-success': grid.comment <= 100,
+                      'bg-warning': grid.comment > 100 }">{{grid.status}}</span>
               </li>
               <!-- <li class="list-inline-item me-3" title="Test Date" tooltip="Test Date">
                 <i class="bx bx-calendar me-1"></i>

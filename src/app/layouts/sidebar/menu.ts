@@ -18,6 +18,12 @@ export const MENU: MenuItem[] = [
         icon: 'bx bx-code-alt',
         link: '/projects/grid',
     },
+    {
+        id:4,
+        label: 'Penetration Testing',
+        icon: 'bx bx-search-alt',
+        link: '/pentest',
+    }
    
    
 ];
