@@ -2,17 +2,17 @@
   
 
     <div class="d-xl-flex">
-        <div class="w-100">
-            <div class="d-md-flex">
-                <div class="card filemanager-sidebar me-md-2">
-                    <div class="card-body">
+        <div class="w-100" >
+            <div class="d-md-flex" >
+                <div class="card filemanager-sidebar me-md-2 h-100"   >
+                    <div class="card-body" >
 
                         <div class="d-flex flex-column h-100">
-                            <div class="mb-4">
+                            <div class="mb-4" style="height: 80vh">
                                 <div class="mb-3">
                                     <div class="dropdown" dropdown>
                                         <button class="btn btn-light dropdown-toggle w-100" dropdownToggle type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-vul-scan-repo
+                                    vul-scan-repo
 
                                         </button>
                                         <div class="dropdown-menu" *dropdownMenu>
@@ -23,7 +23,13 @@ vul-scan-repo
                                         
                                     </div>
                                 </div>
-                                <ul class="list-unstyled categories-list">
+                                <div *ngIf="isLoading" class="progress" style="background-color: transparent;margin-top: 250px;overflow: visible;text-align: center;font-size: 18px;margin-left: 10%;">
+                                    <div class="spinner-border" role="status" style="overflow: visible;">
+                                        <span class="sr-only" style="color: blue;overflow: visible;margin-left: 5px;"> Loading...</span>
+                                      </div>
+                                      <p class="loading-text">&nbsp;&nbsp;Loading Repo...</p>
+                                  </div>
+                                <ul  *ngIf="!isLoading" class="list-unstyled categories-list scrollable" >
                                     <li *ngFor="let folder of folders">
                                         <div class="custom-accordion">
                                             <a class="text-body fw-medium py-1 d-flex align-items-center" *ngIf="folder.name !=''" (click)="folder.isCollapsed = !folder.isCollapsed" [attr.aria-expanded]="!folder.isCollapsed" data-toggle="collapse" href="javascript:void(0);" role="button" aria-expanded="false" aria-controls="categories-collapse">
@@ -50,13 +56,39 @@ vul-scan-repo
                 </div>
                 <!-- filemanager-leftsidebar -->
 
-                <div class="w-100">
+                <div class="w-100" style="height: 87vh">
 
 
 
+                    <div class="card text-center" *ngIf="!showScanResults"  style="height: 87vh">
+                        <div class="card-header" style="padding: 20px;font-size: 18px;background-color: #2A3042;color: #ffffff;">
+                          Welcome to our AI-powered Security Tool
+                        </div>
+                        <div class="card-body" style="padding:14% ;">
+                          <h5 class="card-title">Run Various Types of Scans</h5>
+                          <p class="card-text">
+                            This tool can help you run various types of scans like Static, Dynamic, Penetration Testing, etc. It can even help and recommend you to fix the vulnerabilities using AI.
+                          </p>
+                          <p class="card-text">
+                            Once the vulnerabilities are fixed, you can commit the code to your repo and re-run the scan. This makes the process of securing your codebase easier and more efficient.
+                          </p>
+                          <button class="btn btn-primary" [disabled]="isScanning" (click)="startScanning()">Start Scanning</button>
+                          <div *ngIf="isScanning">
+                            <div class="progress" style="margin-top: 60px;font-size: 28px;height: 24px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="progress + '%'">
+                                </div>
+                              </div>
+                            <label style="margin-top: 20px;color: green;font-size: 16px;">{{progressMessage}}</label>
+                          </div>
+
+                        </div>
+                        <div class="card-footer text-muted" style="padding: 20px;font-size: 16px;">
+                            Secure your codebase with the power of AI
+                          </div>
+                      </div>
 
 
-                    <div class="card" >
+                    <div class="card"   *ngIf="showScanResults">
                         <div class="card-body" >
                             <div *ngIf="fileContent && fileContent['path']">
                                 <div class="row mb-3" >
@@ -89,11 +121,19 @@ vul-scan-repo
                                 </div>
                             </div>
                             <div *ngIf="fileContent && fileContent['path']">
-                                <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
+                                <div class="row file-content" style="min-height: 300px;max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
                                     <pre class="line-numbers" [innerHTML]="displayedContent"></pre>
                                 </div>
                                 <br>
-                                <p *ngIf="commit && commit===true">Do you want to commit the changes and push to the repository and rerun the SCANS? <button (click)="commitChanges()" class="btn btn-success" style="font-size: 12px;" type="button" id="password-addon">  <i class="bx bxs-magic-wand"></i> Commit & Run</button></p>
+                                <p *ngIf="commit && commit===true">Do you want to commit the changes and push to the repository and rerun the SCANS? <button (click)="commitChanges();" class="btn btn-success" style="font-size: 12px;" type="button" id="password-addon">  <i class="bx bxs-magic-wand"></i> Commit & Run</button></p>
+                                
+                                <div *ngIf="isScanning">
+                                    <div class="progress" style="margin-top: 60px;font-size: 28px;height: 24px;">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" [style.width]="progress + '%'">
+                                        </div>
+                                      </div>
+                                    <label style="margin-top: 20px;color: green;font-size: 16px;">{{progressMessage}}</label>
+                                  </div>
                             </div>
 
                             <div class="mt-4">
@@ -108,7 +148,10 @@ vul-scan-repo
 
 
                                 <div class="col-xl-12 col-lg-12">
-                                    <div class="card">
+
+
+                                     
+                                    <div class="card" *ngIf="showScanResults" [@slideIn]>
                                         <div class="card-body">
                                             <div class="d-flex flex-wrap align-items-start">
                                                 <div class="me-2">
@@ -150,13 +193,9 @@ vul-scan-repo
                                                                             </apx-chart>
                                                                             <p class="text-muted mt-4">Fix Confidence Score</p>
                                                                             <button (click)="autofix(data.id , data.recommendations)" class="btn btn-success" style="font-size: 12px;" type="button" id="password-addon">  <i class="bx bxs-magic-wand"></i> Auto Fix</button>
-                                                                        </div>
-                                                                       
-                                                                            
-                                                                       
+                                                                        </div>        
                                                                     </div>
-                                                                    
-                                                                 
+                                                                   
                         
                                                                 </div>
                                                             </li>
@@ -256,8 +295,94 @@ vul-scan-repo
             </div>
         </div>
 
-        <div class="card filemanager-sidebar ms-lg-2">
-            <div class="card-body">
+        <div class="card filemanager-sidebar ms-lg-2" >
+
+            <div class="card-body" *ngIf="!showScanResults">
+                <button class="btn btn-light dropdown-toggle w-100" type="button" aria-haspopup="true" aria-expanded="false">
+                  TOP CONTRIBUTORS
+
+                        </button>
+                <ul class="list-unstyled">
+                    <li class="avatar-line">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                              <div class="avatar-line">
+                                <div class="avatar" style="background-color: rgb(15, 51, 232);color: rgb(255, 255, 255);">
+                                  A
+                                </div>
+                                <span style="margin-left: 8px;">Amit Mehta</span>
+                              </div>
+                             
+                                  <h6 class="card-subtitle mb-2 text-muted" style="float: right;font-size: 12px;" >Total commits : 350</h6>
+                              
+                            </div>
+                           
+                          </div>
+                       
+                      </li>
+                      <li  class="avatar-line">
+
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                              <div class="avatar-line">
+                                <div class="avatar" style="background-color: rgb(154, 236, 198);color: rgb(7, 7, 7);">
+                                    J
+                                     </div>
+                                     <span style="margin-left: 8px;">Jaykumar Babu</span>
+                              </div>
+                           
+                                  <h6 class="card-subtitle mb-2 text-muted" style="float: right;font-size: 12px;" >Total commits : 348</h6>
+                              
+                            </div>
+                           
+                          </div>
+                       
+                        
+                      </li>
+                      <li  class="avatar-line">
+
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                              <div class="avatar-line">
+                                <div class="avatar" style="background-color: rgb(250, 116, 7);color: rgb(255, 255, 255);">
+                                    R
+                                     </div>
+                                     <span style="margin-left: 8px;">Ruvend Subramani</span>
+                              </div>
+                            
+                              <h6 class="card-subtitle mb-2 text-muted" style="float: right;font-size: 12px;" >Total commits : 320</h6>
+                              
+                            </div>
+                           
+                          </div>
+
+                       
+                    
+                      </li>
+                      <li  class="avatar-line">
+
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                              <div class="avatar-line">
+                                <div class="avatar" style="background-color: rgb(250, 7, 213);color: rgb(44, 43, 43);">
+                                    R
+                                      </div>
+                                      <span style="margin-left: 8px;">Raja Narayanan</span>
+                              </div>
+                              
+                                  <h6 class="card-subtitle mb-2 text-muted" style="float: right;font-size: 12px;" >Total commits :280</h6>
+                              
+                            </div>
+                           
+                          </div>
+                     
+                       
+                      </li>
+                  </ul>
+            </div>
+          
+         
+            <div class="card-body" *ngIf="showScanResults">
               <!--   <div class="text-center">
                     <h5 class="font-size-15 mb-4">Confidence Score</h5>
                  
@@ -269,22 +394,22 @@ vul-scan-repo
 
                 <div class="mt-4">
                     <div class="card border shadow-none mb-2">
+                        <button class="btn btn-light dropdown-toggle w-100" type="button" aria-haspopup="true" aria-expanded="false">
+                           SCAN Highlights
+          
+                                  </button>
                         <a href="javascript: void(0);" class="text-body">
                             <div class="p-2">
                                 <div class="d-flex">
-                                    <div class="avatar-xs align-self-center me-2">
-                                        <div class="avatar-title rounded bg-transparent text-success font-size-20">
-                                            <i class="mdi mdi-image"></i>
-                                        </div>
-                                    </div>
+                                 
 
                                     <div class="overflow-hidden me-auto">
-                                        <h5 class="font-size-13 text-truncate mb-1">Static</h5>
-                                        <p class="text-muted text-truncate mb-0">176 Vul</p>
+                                        <h5 class="font-size-13 text-truncate mb-1">Static Vulnerabilities</h5>
+                                       
                                     </div>
 
                                     <div class="ms-2">
-                                        <p class="text-muted">6 GB</p>
+                                        <p class="text-muted text-truncate mb-0">{{this.filteredStaticData.length}} </p>
                                     </div>
                                 </div>
                             </div>
@@ -295,19 +420,15 @@ vul-scan-repo
                         <a href="javascript: void(0);" class="text-body">
                             <div class="p-2">
                                 <div class="d-flex">
-                                    <div class="avatar-xs align-self-center me-2">
-                                        <div class="avatar-title rounded bg-transparent text-danger font-size-20">
-                                            <i class="mdi mdi-play-circle-outline"></i>
-                                        </div>
-                                    </div>
+                                  
 
                                     <div class="overflow-hidden me-auto">
-                                        <h5 class="font-size-13 text-truncate mb-1">Dynamic</h5>
-                                        <p class="text-muted text-truncate mb-0">45 Vul</p>
+                                        <h5 class="font-size-13 text-truncate mb-1">Dynamic Vulnerabilities</h5>
+                                        
                                     </div>
 
                                     <div class="ms-2">
-                                        <p class="text-muted">4.1 GB</p>
+                                        <p class="text-muted text-truncate mb-0">{{this.dynamicData.length}}</p>
                                     </div>
                                 </div>
                             </div>

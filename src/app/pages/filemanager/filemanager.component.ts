@@ -5,12 +5,29 @@ import { RootReducerState } from 'src/app/store';
 import { selectData } from 'src/app/store/filemanager/filemanager-selector';
 import { fetchRecentFilesData } from 'src/app/store/filemanager/filemanager.actions';
 import { HttpClient ,HttpHeaders} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { trigger, transition, style, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
 @Component({
   selector: 'app-filemanager',
   templateUrl: './filemanager.component.html',
-  styleUrls: ['./filemanager.component.scss']
+  styleUrls: ['./filemanager.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('2000ms', style({ opacity: 1 })),
+      ]),
+    ]),
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('500ms', style({ transform: 'translateY(0)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms', style({ transform: 'translateY(-100%)' })),
+      ]),
+    ])
+  ]
 })
 export class FilemanagerComponent implements OnInit {
   // bread crumb items
@@ -22,7 +39,8 @@ export class FilemanagerComponent implements OnInit {
   files = {};
   folders = [];
   fileContent = {};
-
+  isLoading = true;
+  showScanResults = false;
   staticdata = [
     {
       "id":1,
@@ -98,9 +116,47 @@ export class FilemanagerComponent implements OnInit {
     }
   ];
   filteredStaticData =[];
+
+  isScanning = false;
+progress = 0;
+progressMessage = '';
   constructor(public router: Router,private http: HttpClient, private store: Store<{ data: RootReducerState }>) {
   }
 
+ 
+  startScanning() {
+    this.isScanning = true;
+    this.progress = 0;
+    this.progressMessage = 'Starting scan...';
+
+    const messages = [
+    'Scanning for vulnerabilities..',
+    'Static Scan is in progress..', 
+    'Analysing found vulnerabilities..',
+    'Static Scan is Completed.. & Dynamic Scan started..', 
+    'Dynamic Scan is in progress..',  
+    'Dynamic Scan is Completed.',
+    'Penetration testing execution started..', 
+    'Almost done with penetration testing..',
+    'Execution completed..',
+    'Documenting results and recommendations..', 
+   ];
+    let messageIndex = 1;
+
+    const interval = setInterval(() => {
+      this.progress += 10;
+      this.progressMessage = `${messages[messageIndex]}`;
+
+      if (this.progress >= 100) {
+        clearInterval(interval);
+        this.progressMessage = 'Scan completed';
+        this.showScanResults = true;
+        this.isScanning = false;
+      }
+
+      messageIndex = (messageIndex + 1);
+    }, 1000);
+  }
   autoFixDone = false;
   typingSpeed = 1; // Speed in milliseconds
   displayedContent = '';
@@ -121,17 +177,46 @@ export class FilemanagerComponent implements OnInit {
   } 
 
   commitChanges(){
-    this.commit = false;
-    this.autoFixDone = false;
-    this.displayedContent = '';
-    this.fileContent = {};
-    this.staticdata.forEach(item => {
-      if (item.id === this.selectedId) {
-        item.status = 'Closed';
+
+    this.isScanning = true;
+    this.progress = 0;
+    this.progressMessage = 'Starting scan...';
+
+    const messages = [
+    'Scanning the code for vulnerabilities..',
+    'Scan is in progress..', 
+    'Analysing found vulnerabilities..',
+    'Execution completed..',
+    'Documenting results and recommendations..', 
+   ];
+    let messageIndex = 1;
+
+    const interval = setInterval(() => {
+      this.progress += 20;
+      this.progressMessage = `${messages[messageIndex]}`;
+
+      if (this.progress >= 100) {
+        clearInterval(interval);
+        this.progressMessage = 'Scan completed';
+        this.showScanResults = true;
+        this.commit = false;
+        this.autoFixDone = false;
+        this.displayedContent = '';
+        this.fileContent = {};
+        this.staticdata.forEach(item => {
+          if (item.id === this.selectedId) {
+            item.status = 'Closed';
+          }
+        });
+        this.filteredStaticData = this.staticdata.filter(item => item.status === 'Open');
+        this.isScanning = false;
       }
-    });
-    this.filteredStaticData = this.staticdata.filter(item => item.status === 'Open');
+
+      messageIndex = (messageIndex + 1);
+    }, 1000);
+  
   }
+  
   getRepoContent(): Observable<any> {
     return this.http.get<any>(`http://localhost:3000/api/repo`);
   }
@@ -202,7 +287,7 @@ export class FilemanagerComponent implements OnInit {
           if (b.name === '') return -1; // Empty folders should be at the end
           return a.name.localeCompare(b.name); // Sort folders in ascending order based on the key
         });
-
+        this.isLoading = false;
    /*    
       if (this.folders && this.folders.length > 0) {
         
