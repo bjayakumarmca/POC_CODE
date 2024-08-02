@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { fetchprojectData } from 'src/app/store/ProjectsData/project.actions';
 import { selectData } from 'src/app/store/ProjectsData/project-selector';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-projectgrid',
@@ -33,15 +34,28 @@ export class ProjectgridComponent implements OnInit {
   total: Observable<number>;
   page: any = 1;
   endItem: any = 12;
-  dataUrl = 'assets/dashboard.json'
-
-  constructor(private modalService: BsModalService, public store: Store, private formBuilder: UntypedFormBuilder,private http: HttpClient) {
+  dataUrl = 'assets/dashboard.json';
+  isRepoCreated = 'no';
+  repoName = '';
+  repoUrl='';
+  site='';
+  descript='';
+  logo='';
+  constructor(private modalService: BsModalService, public store: Store, private formBuilder: UntypedFormBuilder,
+    private http: HttpClient, private router: Router) {
 
   }
 
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Projects' }, { label: 'Projects Grid', active: true }];
-
+    if(localStorage.getItem('isRepoCreated') && localStorage.getItem('isRepoCreated') === 'yes'){
+      this.isRepoCreated = 'yes';
+      this.repoName = localStorage.getItem('reponame');
+      this.repoUrl = localStorage.getItem('repourl');
+      this.site = localStorage.getItem('site');
+      this.descript = localStorage.getItem('descript');
+      this.logo = this.logoMaker(this.repoName);
+    }
     this.store.dispatch(fetchprojectData());
     this.store.select(selectData).subscribe(data => {
       this.projectData = data;
@@ -60,5 +74,17 @@ export class ProjectgridComponent implements OnInit {
 
   getJSONData(): Observable<any[]> {
     return this.http.get<any[]>(this.dataUrl);
+  }
+
+  logoMaker(input: string): string {
+    return input
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase();
+  }
+
+  goToFileManager(){
+    this.router.navigate(['/filemanager']);
   }
 }

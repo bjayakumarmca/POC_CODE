@@ -2,8 +2,57 @@
   <app-page-title title="Dashboard" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
   <div class="row">
+    <div class=" col-xl-4 col-sm-6" *ngIf="isRepoCreated === 'yes'" style="cursor: pointer;" (click)="goToFileManager()">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex">
+            <div class="flex-shrink-0 me-4">
+              <div class="avatar-md">
+                <span class="avatar-title rounded-circle bg-light text-danger font-size-24" style="color:#556ee6 !important">
+                {{logo}}
+                </span>
+              </div>
+            </div>
+            <div class="flex-grow-1 overflow-hidden">
+              <h5 class="text-truncate font-size-15">
+                <a href="javascript: void(0);" class="text-dark">{{repoName}}</a>
+              </h5>
+              <p class="text-muted mb-4">{{descript}}</p>
+              <div class="avatar-group">
+                <div class="avatar-group-item" title="Amit Mehta" tooltip="Amit Mehta">
+                  <a href="javascript: void(0);" class="d-inline-block">
+                    <img src="assets/images/usr/user.png" class="rounded-circle avatar-xs" alt />
+                  </a>
+                </div>
+                <div class="avatar-group-item" title="Girish B" tooltip="Girish B">
+                  <a href="javascript: void(0);" class="d-inline-block">
+                    <img src="assets/images/usr/user.png" class="rounded-circle avatar-xs" alt />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="px-4 py-3 border-top">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item me-3" title="Scan Status" tooltip="Scan Status">
+              <span class="badge" [ngClass]="{ 'bg-success':  isRepoCreated === 'yes',
+                    'bg-warning': isRepoCreated === 'no'}">SAST Scan Completed</span>
+            </li>
+            <li class="list-inline-item me-3" title="Due Date" tooltip="Scan Date">
+              <i class="bx bx-calendar me-1"></i>
+              1 Aug, 24
+            </li>
+            <li class="list-inline-item me-3" title="Comments" tooltip="Vulnerabilities">
+              <i class="bx bx-shield-quarter me-1"></i>
+              3
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
     @for(grid of projectData;track $index){
-    <div class=" col-xl-4 col-sm-6">
+    <div class=" col-xl-4 col-sm-6" style="cursor: pointer;">
       <div class="card">
         <div class="card-body">
           <div class="d-flex">
@@ -21,18 +70,18 @@
               </h5>
               <p class="text-muted mb-4">{{grid.subtext}}</p>
               <div class="avatar-group">
-                <div class="avatar-group-item">
+                <div class="avatar-group-item" title="{{grid.uname[0]}}" tooltip="{{grid.uname[0]}}">
                   <a href="javascript: void(0);" class="d-inline-block">
                     <img src="{{grid.users[0]}}" class="rounded-circle avatar-xs" alt />
                   </a>
                 </div>
                 @if(grid.users[1]){
-                <div class="avatar-group-item">
+                <div class="avatar-group-item" title="{{grid.uname[1]}}" tooltip="{{grid.uname[1]}}">
                   <a href="javascript: void(0);" class="d-inline-block">
                     <img src="{{grid.users[1]}}" class="rounded-circle avatar-xs" alt />
                   </a>
                 </div>}@else if (grid.users[2]) {
-                <div class="avatar-group-item">
+                <div class="avatar-group-item" title="{{grid.uname[2]}}" tooltip="{{grid.uname[2]}}">
                   <a href="javascript: void(0);" class="d-inline-block">
                     <img src="{{grid.users[2]}}" class="rounded-circle avatar-xs" alt />
                   </a>
@@ -53,7 +102,7 @@
               {{grid.date}}
             </li>
             <li class="list-inline-item me-3" title="Comments" tooltip="Vulnerabilities">
-              <i class="bx bx-error me-1"></i>
+              <i class="bx bx-shield-quarter me-1"></i>
               {{grid.comment}}
             </li>
           </ul>

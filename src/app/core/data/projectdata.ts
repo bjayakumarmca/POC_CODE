@@ -6,6 +6,7 @@ const projectData = [
         text: 'BillEase-Core',
         subtext: 'Bill Ease applications Core module',
         users: ['assets/images/usr/avatar3.jpeg', 'assets/images/usr/avatar2.jpeg'],
+        uname: ['Kevin Williams', 'George Bailey'],
         status: 'SAST Scan Completed',
         date: '31 Jul, 24',
         comment: 15
@@ -17,6 +18,7 @@ const projectData = [
         text: 'Customer-Care-UI',
         subtext: 'UI code repo for CCA',
         users: ['assets/images/usr/avatar3.jpeg'],
+        uname: ['Kevin Williams'],
         status: 'SCA Scan Completed',
         date: '30 Jul, 24',
         comment: 5
@@ -28,6 +30,7 @@ const projectData = [
         text: 'Adserver-App',
         subtext: 'Code repository for Adserver',
         users: ['assets/images/usr/avatar9.jpeg', 'assets/images/usr/avatar4.jpeg'],
+        uname: ['Sara Gomes', 'Alice Hornet'],
         status: 'DAST Scan Completed',
         date: '31 Jul, 24',
         comment: 11
@@ -39,6 +42,7 @@ const projectData = [
         text: 'Network-Inventory-Common',
         subtext: 'Network Inventory code repo',
         users: ['assets/images/usr/avatar6.jpeg', 'assets/images/usr/avatar9.jpeg', 'assets/images/usr/avatar3.jpeg'],
+        uname: ['Wills Kenny','Sara Gomes','Kevin Williams'],
         status: 'SAST Scan Completed',
         date: '29 Jul, 24',
         comment: 22
@@ -50,6 +54,7 @@ const projectData = [
         text: 'Workflow-Manager',
         subtext: 'WFM code repository',
         users: ['assets/images/usr/avatar7.jpeg', 'assets/images/usr/avatar8.jpeg'],
+        uname: ['David Miller','Riche Mills'],
         status: 'DAST Scan Completed',
         date: '22 Jul, 24',
         comment: 12
@@ -61,6 +66,7 @@ const projectData = [
         text: 'Asset-Manager-Core',
         subtext: 'Asset Manager Code Repo',
         users: ['assets/images/usr/avatar6.jpeg'],
+        uname:['Wills Kenny'],
         status: 'SCA Scan Completed',
         date: '24 Jul, 24',
         comment: 6
@@ -72,6 +78,7 @@ const projectData = [
         text: 'BCM-APP-Repo',
         subtext: 'BCM application code repo',
         users: ['assets/images/usr/avatar3.jpeg'],
+        uname: ['Kevin Williams'],
         status: 'DAST Scan Completed',
         date: '31 Jul, 24',
         comment: 18
@@ -83,6 +90,7 @@ const projectData = [
         text: 'IoT-Connect',
         subtext: 'Code repository for IOTC',
         users: ['assets/images/usr/avatar4.jpeg'],
+        uname: ['Alice Hornet'],
         status: 'SCA Scan Completed',
         date: '27 Jul, 24',
         comment: 5
@@ -94,6 +102,7 @@ const projectData = [
         text: 'AssitTel-Service',
         subtext: 'Assist Tel Service code repo',
         users: ['assets/images/usr/avatar7.jpeg'],
+        uname: ['David Miller'],
         status: 'SAST Scan Completed',
         date: '29 Jul, 24',
         comment: 16
@@ -105,6 +114,7 @@ const projectData = [
         text: 'NetCloud-Common',
         subtext: 'Net Cloud application code repo',
         users: ['assets/images/usr/avatar6.jpeg'],
+        uname: ['Wills Kenny'],
         status: 'DAST Scan Completed',
         date: '24 Jul, 24',
         comment: 12
@@ -116,6 +126,7 @@ const projectData = [
         text: 'Signal-Sync',
         subtext: 'Signal Sync application repo',
         users: ['assets/images/usr/avatar3.jpeg'],
+        uname: ['Kevin Williams'],
         status: 'SAST Scan Completed',
         date: '30 Jul, 24',
         comment: 21
@@ -127,6 +138,7 @@ const projectData = [
         text: 'UConnect-App',
         subtext: 'Unified Connect App repo',
         users: ['assets/images/usr/avatar6.jpeg', 'assets/images/usr/avatar4.jpeg', 'assets/images/usr/avatar3.jpeg'],
+        uname: ['Wills Kenny','Alice Hornet','Kevin Williams'],
         status: 'DAST Scan Completed',
         date: '29 Jul, 24',
         comment: 13
