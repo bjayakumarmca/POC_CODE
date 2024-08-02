@@ -250,54 +250,6 @@
                                                     </ngx-simplebar>
                                                 </tab>
 
-                                                <tab heading="Dynamic" class="mt-4">
-                                                    <ngx-simplebar style="height: 600px;">
-                                                        <ul class="list-group list-group-flush">
-                                                            <li class="list-group-item py-3" *ngFor="let data of dynamicData; let i = index">
-                                                                <div class="d-flex">
-                                                                   
-                                                                    <div class="align-self-center overflow-hidden me-auto">
-                                                                        <div>
-                                                                            <h5 class="font-size-14 text-truncate"><a href="javascript: void(0);" class="text-dark">
-                                                                                Issue Type : {{data['issue_type']}}</a>
-                                                                            </h5>
-                                                                            <p class="text-muted mb-0">Line no: {{data['line_number']}}</p>
-                                                                            <br>
-                                                                            <p> Affected Code : </p>
-                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
-                                                                                <pre class="line-numbers" [innerHTML]="data['code_snippet']"></pre>
-                                                                            </div>
-                                                                            <br>
-                                                                            <p> Recommended Fix</p>
-                                                                            <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
-                                                                                <pre class="line-numbers" [innerHTML]="data['recommended_code_fix']"></pre>
-                                                                            </div>
-                                                                         
-                                                                        </div>
-                                                                    </div>
-                                                             
-                                                                    
-                                                                    <div class="dropdown ms-2" dropdown>
-                                                                        <a class="text-muted font-size-14" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" dropdownToggle>
-                                                                            <i class="mdi mdi-dots-horizontal"></i>
-                                                                        </a>
-                        
-                                                                        <div class="dropdown-menu dropdown-menu-end" *dropdownMenu>
-                                                                            <a class="dropdown-item" href="javascript:void(0);">Action</a>
-                                                                            <a class="dropdown-item" href="javascript:void(0);">Another
-                                                                                action</a>
-                                                                            <a class="dropdown-item" href="javascript:void(0);">Something
-                                                                                else
-                                                                                here</a>
-                                                                        </div>
-                                                                    </div>
-                        
-                                                                </div>
-                                                            </li>
-                                                           
-                                                        </ul>
-                                                    </ngx-simplebar>
-                                                </tab>
                                                 <tab heading="DAST" class="mt-4">
                                                     <ngx-simplebar style="height: 600px;">
                                                         <ul class="list-group list-group-flush">
