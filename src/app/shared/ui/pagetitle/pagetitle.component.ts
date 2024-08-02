@@ -18,6 +18,7 @@ export class PagetitleComponent implements OnInit {
   @Output() newAppCreated = new EventEmitter<void>();
   @Input() breadcrumbItems;
   @Input() title: string;
+  isSpinner = false;
 
   constructor(private modalService: BsModalService) { }
 
@@ -40,7 +41,9 @@ export class PagetitleComponent implements OnInit {
     localStorage.setItem('site',this.mysite.nativeElement.value);
     localStorage.setItem('descript',this.mydescript.nativeElement.value);
     this.modalRef.hide();
+    this.isSpinner = true;
     setTimeout(()=>{
+      this.isSpinner = false;
       this.storageItemCreated.emit();
     }, 3000);
   }
@@ -51,7 +54,9 @@ export class PagetitleComponent implements OnInit {
     localStorage.setItem('appurl',this.appurl.nativeElement.value);
     localStorage.setItem('testlevel',this.selectlevel.nativeElement.value);
     this.modalRef.hide();
+    this.isSpinner = true;
     setTimeout(()=>{
+      this.isSpinner = false;
       this.newAppCreated.emit();
     }, 3000);
   }
