@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-
 @Component({
   selector: 'app-page-title',
   templateUrl: './pagetitle.component.html',
@@ -12,13 +11,19 @@ export class PagetitleComponent implements OnInit {
   @ViewChild('repourl') myrepourl!: ElementRef;
   @ViewChild('site') mysite!: ElementRef;
   @ViewChild('descript') mydescript!: ElementRef;
+  @ViewChild('appname') appname!: ElementRef;
+  @ViewChild('appurl') appurl!: ElementRef;
+  @ViewChild('selectlevel') selectlevel!: ElementRef;
   @Output() storageItemCreated = new EventEmitter<void>();
+  @Output() newAppCreated = new EventEmitter<void>();
   @Input() breadcrumbItems;
   @Input() title: string;
+  isSpinner = false;
 
   constructor(private modalService: BsModalService) { }
 
   ngOnInit() {
+
   }
 
   /**
@@ -36,8 +41,23 @@ export class PagetitleComponent implements OnInit {
     localStorage.setItem('site',this.mysite.nativeElement.value);
     localStorage.setItem('descript',this.mydescript.nativeElement.value);
     this.modalRef.hide();
+    this.isSpinner = true;
     setTimeout(()=>{
+      this.isSpinner = false;
       this.storageItemCreated.emit();
+    }, 3000);
+  }
+
+  createApp(){
+    localStorage.setItem('isAppCreated','yes');
+    localStorage.setItem('appname',this.appname.nativeElement.value);
+    localStorage.setItem('appurl',this.appurl.nativeElement.value);
+    localStorage.setItem('testlevel',this.selectlevel.nativeElement.value);
+    this.modalRef.hide();
+    this.isSpinner = true;
+    setTimeout(()=>{
+      this.isSpinner = false;
+      this.newAppCreated.emit();
     }, 3000);
   }
   disableLink(event: Event) {

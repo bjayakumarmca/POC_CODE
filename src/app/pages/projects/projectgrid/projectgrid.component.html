@@ -24,7 +24,7 @@
                     <img src="assets/images/usr/user.png" class="rounded-circle avatar-xs" alt />
                   </a>
                 </div>
-                <div class="avatar-group-item" title="Girish B" tooltip="Girish B">
+                <div class="avatar-group-item" title="Jayakumar Babu" tooltip="Jayakumar Babu">
                   <a href="javascript: void(0);" class="d-inline-block">
                     <img src="assets/images/usr/user.png" class="rounded-circle avatar-xs" alt />
                   </a>
@@ -36,16 +36,16 @@
         <div class="px-4 py-3 border-top">
           <ul class="list-inline mb-0">
             <li class="list-inline-item me-3" title="Scan Status" tooltip="Scan Status">
-              <span class="badge" [ngClass]="{ 'bg-success':  isRepoCreated === 'yes',
-                    'bg-warning': isRepoCreated === 'no'}">SAST Scan Completed</span>
+              <span class="badge" [ngClass]="{ 'bg-info':  isRepoCreated === 'yes',
+                    'bg-warning': isRepoCreated === 'no'}">SAST Scan Pending</span>
             </li>
             <li class="list-inline-item me-3" title="Due Date" tooltip="Scan Date">
               <i class="bx bx-calendar me-1"></i>
-              1 Aug, 24
+              -
             </li>
             <li class="list-inline-item me-3" title="Comments" tooltip="Vulnerabilities">
               <i class="bx bx-shield-quarter me-1"></i>
-              3
+              -
             </li>
           </ul>
         </div>
@@ -72,18 +72,18 @@
               <div class="avatar-group">
                 <div class="avatar-group-item" title="{{grid.uname[0]}}" tooltip="{{grid.uname[0]}}">
                   <a href="javascript: void(0);" class="d-inline-block">
-                    <img src="{{grid.users[0]}}" class="rounded-circle avatar-xs" alt />
+                    <img src="assets/images/usr/user.png" class="rounded-circle avatar-xs" alt />
                   </a>
                 </div>
                 @if(grid.users[1]){
                 <div class="avatar-group-item" title="{{grid.uname[1]}}" tooltip="{{grid.uname[1]}}">
                   <a href="javascript: void(0);" class="d-inline-block">
-                    <img src="{{grid.users[1]}}" class="rounded-circle avatar-xs" alt />
+                    <img src="assets/images/usr/user.png" class="rounded-circle avatar-xs" alt />
                   </a>
                 </div>}@else if (grid.users[2]) {
                 <div class="avatar-group-item" title="{{grid.uname[2]}}" tooltip="{{grid.uname[2]}}">
                   <a href="javascript: void(0);" class="d-inline-block">
-                    <img src="{{grid.users[2]}}" class="rounded-circle avatar-xs" alt />
+                    <img src="assets/images/usr/user.png" class="rounded-circle avatar-xs" alt />
                   </a>
                 </div>}
               </div>
