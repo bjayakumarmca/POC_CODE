@@ -13,8 +13,8 @@ const routes: Routes = [
   {
     path: "",
     component: SaasComponent
-  },
-  { path: 'pen-test-executor', component: ChatComponent },
+  }, 
+   { path: 'pen-test-executor/:id', component: ChatComponent },
   { path: 'dashboard', component: DefaultComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'chat', component: ChatComponent },

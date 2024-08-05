@@ -7,6 +7,8 @@ import { fetchRecentFilesData } from 'src/app/store/filemanager/filemanager.acti
 import { HttpClient ,HttpHeaders} from '@angular/common/http';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Observable } from 'rxjs';
+
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -40,8 +42,8 @@ export class ChatComponent implements OnInit {
 progress = 0;
 progressMessage = '';
 
-showPenTestResult=false;
-  constructor(public router: Router,private http: HttpClient, private store: Store<{ data: RootReducerState }>) {
+showPenTestResult : boolean;
+  constructor(public router: Router,private http: HttpClient,private route: ActivatedRoute, private store: Store<{ data: RootReducerState }>) {
   }
   getStartPenTest(): Observable<any> {
     return this.http.get<any>(`http://localhost:3000/runtask`);
@@ -74,18 +76,28 @@ showPenTestResult=false;
   dynamicData: any;
 
 
-getPenTestData() {
-  this.http.get('assets/data/pentest.json').subscribe(data => {
-    this.penTest = data;
-   
-  });
+getPenTestData(type) {
+  if(type === 'att'){
+    this.http.get('assets/data/pentest_existing.json').subscribe(data => {
+      this.penTest = data;
+      this.showPenTestResult=true;
+    });
+  } else {
+    this.http.get('assets/data/pentest.json').subscribe(data => {
+      this.penTest = data;
+    });
+  }
+  
 }
 
 
   ngOnInit(): void {
-
-    this.getPenTestData();
-
+    this.route.params.subscribe(params => {
+      if(params.id ==='att'){
+        this.getPenTestData('att');
+      } else {
+        this.getPenTestData('other');
+      }
+    });
   }
-
 }
