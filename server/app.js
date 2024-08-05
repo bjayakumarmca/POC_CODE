@@ -3,7 +3,7 @@ const axios = require('axios');
 const cors = require('cors');
 const app = express();
 const port = 3000;
-
+const { exec } = require('child_process');
 app.use(cors());
 
 const token =""
@@ -58,6 +58,27 @@ app.get('/api/file', cors(),async (req, res) => {
   } catch (error) {
     res.status(500).send({ message: 'Error fetching file content from GitHub' });
   }
+});
+
+app.get('/runTask', async(request,response) =>{
+ 
+  console.log("runTask() called");
+  const taskName ='Test.robot';
+  console.log("Task:"+taskName);
+  const directoryPath = 'C:\\Users\\AmitMehta\\Documents\\projects\\POC_CODE\\server';
+  await exec('python -m robot '+taskName, { cwd: directoryPath }, (error, stdout, stderr) => {
+    console.log("Robot");
+    if (error) {
+      console.error(`Error executing command: ${error.message}`);
+    }
+    if (stderr) {
+      console.error(`STD Error executing command: ${stderr}`);
+    }
+    response.status(200); 
+    response.send({
+      "message": "Success"
+    });
+  });
 });
 
 app.listen(port, () => {

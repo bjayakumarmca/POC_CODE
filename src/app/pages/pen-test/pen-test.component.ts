@@ -18,6 +18,9 @@ export class PenTestComponent implements OnInit {
     this.breadCrumbItems = [{ label: 'Projects' }, { label: 'Projects Grid', active: true }];
     this.onNewAppCreated();
   }
+  navigate(){
+    window.location.href = '/pen-test-executor';
+  }
 
   onNewAppCreated(){
     if(localStorage.getItem('isAppCreated') && localStorage.getItem('isAppCreated') === 'yes'){

@@ -14,6 +14,7 @@ const routes: Routes = [
     path: "",
     component: SaasComponent
   },
+  { path: 'pen-test-executor', component: ChatComponent },
   { path: 'dashboard', component: DefaultComponent },
   { path: 'calendar', component: CalendarComponent },
   { path: 'chat', component: ChatComponent },
