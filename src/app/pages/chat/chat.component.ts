@@ -69,7 +69,7 @@ showPenTestResult : boolean;
       }
 
       messageIndex = (messageIndex + 1);
-    }, 5000);
+    }, 3500);
   }
 
   penTest: any;
@@ -85,6 +85,7 @@ getPenTestData(type) {
   } else {
     this.http.get('assets/data/pentest.json').subscribe(data => {
       this.penTest = data;
+      this.showPenTestResult=false;
     });
   }
   
