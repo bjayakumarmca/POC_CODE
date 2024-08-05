@@ -1,191 +1,91 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
-
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { fetchchatMessageData, fetchchatdata } from 'src/app/store/Chat/chat.action';
-import { selectData, selectchatData } from 'src/app/store/Chat/chat-selector';
-
+import { RootReducerState } from 'src/app/store';
+import { selectData } from 'src/app/store/filemanager/filemanager-selector';
+import { fetchRecentFilesData } from 'src/app/store/filemanager/filemanager.actions';
+import { HttpClient ,HttpHeaders} from '@angular/common/http';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('2000ms', style({ opacity: 1 })),
+      ]),
+    ]),
+    trigger('slideIn', [
+      transition(':enter', [
+        style({ transform: 'translateY(-100%)' }),
+        animate('500ms', style({ transform: 'translateY(0)' })),
+      ]),
+      transition(':leave', [
+        animate('500ms', style({ transform: 'translateY(-100%)' })),
+      ]),
+    ])
+  ]
 })
-export class ChatComponent implements OnInit, AfterViewInit {
-
-  @ViewChild('scrollEle') scrollEle;
-  @ViewChild('scrollRef') scrollRef;
-
-  username = 'Steven Franklin';
-
+export class ChatComponent implements OnInit {
   // bread crumb items
   breadCrumbItems: Array<{}>;
-  chatData: any
-  chatMessagesData: any
-  formData: UntypedFormGroup;
-  // Form submit
-  chatSubmit: boolean;
-  usermessage: string;
-  emoji: any = '';
 
-  constructor(public formBuilder: UntypedFormBuilder, public store: Store) {
+  dismissible = true;
+
+
+  isScanning = false;
+progress = 0;
+progressMessage = '';
+
+showPenTestResult=false;
+  constructor(public router: Router,private http: HttpClient, private store: Store<{ data: RootReducerState }>) {
+  }
+  getStartPenTest(): Observable<any> {
+    return this.http.get<any>(`http://localhost:3000/runtask`);
   }
 
-  ngOnInit() {
-    this.breadCrumbItems = [{ label: 'Skote' }, { label: 'Chat', active: true }];
+ 
+  startScanning() {
+    this.isScanning = true;
+    this.getStartPenTest().subscribe(data => {});
+    this.progress = 0;
+    this.progressMessage = 'Starting scan...';
 
-    this.formData = this.formBuilder.group({
-      message: ['', [Validators.required]],
-    });
+    const messages = '';
+    let messageIndex = 1;
 
-    /**
-    * fetches data
-    */
-    this.store.dispatch(fetchchatdata());
-    this.store.select(selectData).subscribe(data => {
-      this.chatData = data;
-    })
-    this.store.dispatch(fetchchatMessageData());
-    this.store.select(selectchatData).subscribe(data => {
-      this.chatMessagesData = data;
-    })
-  }
+    const interval = setInterval(() => {
+      this.progress += 10;
+      this.progressMessage = `${messages}`;
 
-  ngAfterViewInit() {
-    this.scrollEle.SimpleBar.getScrollElement().scrollTop = 100;
-    this.scrollRef.SimpleBar.getScrollElement().scrollTop = 200;
-  }
-
-  /**
-   * Returns form
-   */
-  get form() {
-    return this.formData.controls;
-  }
-
-
-  onListScroll() {
-    if (this.scrollRef !== undefined) {
-      setTimeout(() => {
-        this.scrollRef.SimpleBar.getScrollElement().scrollTop =
-          this.scrollRef.SimpleBar.getScrollElement().scrollHeight + 1500;
-      }, 500);
-    }
-  }
-
-  chatUsername(name) {
-    this.username = name;
-    this.usermessage = 'Hello';
-    this.chatMessagesData = [];
-    const currentDate = new Date();
-
-    this.chatMessagesData.push({
-      name: this.username,
-      message: this.usermessage,
-      time: currentDate.getHours() + ':' + currentDate.getMinutes()
-    });
-
-  }
-
-  /**
-   * Save the message in chat
-   */
-  messageSave() {
-    const message = this.formData.get('message').value;
-    const currentDate = new Date();
-    if (this.formData.valid && message) {
-      // Message Push in Chat
-      this.chatMessagesData.push({
-        align: 'right',
-        name: 'Henry Wells',
-        message,
-        time: currentDate.getHours() + ':' + currentDate.getMinutes()
-      });
-      this.onListScroll();
-
-      // Set Form Data Reset
-      this.formData = this.formBuilder.group({
-        message: null
-      });
-    }
-
-    this.chatSubmit = true;
-  }
-
-  // Delete Message
-  deleteMessage(event: any) {
-    event.target.closest('li').remove();
-  }
-
-  // Copy Message
-  copyMessage(event: any) {
-    navigator.clipboard.writeText(event.target.closest('li').querySelector('p').innerHTML);
-  }
-
-  // Delete All Message
-  deleteAllMessage(event: any) {
-    var allMsgDelete: any = document.querySelector('.chat-conversation')?.querySelectorAll('li');
-    allMsgDelete.forEach((item: any) => {
-      item.remove();
-    })
-  }
-
-  // Emoji Picker
-  showEmojiPicker = false;
-  sets: any = [
-    'native',
-    'google',
-    'twitter',
-    'facebook',
-    'emojione',
-    'apple',
-    'messenger'
-  ]
-  set: any = 'twitter';
-  toggleEmojiPicker() {
-    this.showEmojiPicker = !this.showEmojiPicker;
-  }
-
-  addEmoji(event: any) {
-
-    const { emoji } = this;
-    if (this.formData.get('message').value) {
-      var text = `${emoji}${event.emoji.native}`;
-    } else {
-      text = event.emoji.native;
-    }
-    this.emoji = text;
-    this.showEmojiPicker = false;
-  }
-
-  onFocus() {
-    this.showEmojiPicker = false;
-  }
-
-  onBlur() {
-  }
-
-  closeReplay() {
-    document.querySelector('.replyCard')?.classList.remove('show');
-  }
-
-  // Contact Search
-  ContactSearch() {
-    var input: any, filter: any, ul: any, li: any, a: any | undefined, i: any, txtValue: any;
-    input = document.getElementById("searchContact") as HTMLAreaElement;
-    filter = input.value.toUpperCase();
-    ul = document.querySelectorAll(".chat-list");
-    ul.forEach((item: any) => {
-      li = item.getElementsByTagName("li");
-      for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("h5")[0];
-        txtValue = a?.innerText;
-        if (txtValue?.toUpperCase().indexOf(filter) > -1) {
-          li[i].style.display = "";
-        } else {
-          li[i].style.display = "none";
-        }
+      if (this.progress >= 100) {
+        clearInterval(interval);
+       this.showPenTestResult=true;
       }
-    })
+
+      messageIndex = (messageIndex + 1);
+    }, 5000);
+  }
+
+  penTest: any;
+  dynamicData: any;
+
+
+getPenTestData() {
+  this.http.get('assets/data/pentest.json').subscribe(data => {
+    this.penTest = data;
+   
+  });
+}
+
+
+  ngOnInit(): void {
+
+    this.getPenTestData();
+
   }
 
 }
