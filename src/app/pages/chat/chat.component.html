@@ -1,7 +1,7 @@
 
 <tabset class="nav-tabs nav-tabs-custom card-header-tabs custom-widget-nav ms-auto" >
 
-  <div class="card text-center" *ngIf="!showPenTestResult"  style="height: 87vh" >
+  <div class="card text-center" *ngIf="showPenTestResult == false"  style="height: 87vh" >
     <div class="card-header" style="padding: 20px;font-size: 18px;background-color: #2A3042;color: #ffffff;">
       AI Powered Penetration Testing Tool
     </div>
@@ -29,7 +29,7 @@
   </div>
 
 
-<tab class="mt-4" *ngIf="showPenTestResult" [@slideIn]>
+<tab class="mt-4" *ngIf="showPenTestResult === true" [@slideIn]>
   <ngx-simplebar style="height: 600px;">
       <h4>Test Results</h4>
       <div style="overflow-x: auto;">

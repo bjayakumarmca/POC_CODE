@@ -18,7 +18,7 @@ ${BROWSER}          Chrome
 #${URL}    https://juice-shop.herokuapp.com/
 #${URL}    https://www.bestbuy.com/
 #${URL}     https://www.att.com/
-${URL}    https://github.com/raesene/bWAPP
+${URL}    http://www.itsecgames.com/bugs.htm
 
 *** Test Cases ***
 Find Vulnerabilities

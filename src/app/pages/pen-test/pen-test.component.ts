@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { penTestData } from 'src/app/core/data/penTestData';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-pen-test',
   templateUrl: './pen-test.component.html',
@@ -14,12 +14,17 @@ export class PenTestComponent implements OnInit {
   appUrl='';
   testLevel='';
   logo='';
+  constructor(private router: Router) { }
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Projects' }, { label: 'Projects Grid', active: true }];
     this.onNewAppCreated();
   }
-  navigate(){
-    window.location.href = '/pen-test-executor';
+  navigate(type?: string) {
+    if(type && type == 'new'){
+      this.router.navigate(['/pen-test-executor/app']);
+    } else {
+      this.router.navigate(['/pen-test-executor/att']);
+    }
   }
 
   onNewAppCreated(){
