@@ -65,8 +65,8 @@ app.get('/runTask', async(request,response) =>{
   console.log("runTask() called");
   const taskName ='Test.robot';
   console.log("Task:"+taskName);
-  const directoryPath = 'C:\\Users\\AmitMehta\\Documents\\projects\\POC_CODE\\server';
-  await exec('python -m robot '+taskName, { cwd: directoryPath }, (error, stdout, stderr) => {
+  const directoryPath = '/Users/jaybabu/Downloads/Skote_Angular_v4.5.0/Admin/server';
+  await exec('python3 -m robot '+taskName, { cwd: directoryPath }, (error, stdout, stderr) => {
     console.log("Robot");
     if (error) {
       console.error(`Error executing command: ${error.message}`);

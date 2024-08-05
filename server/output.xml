@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.9.6 on darwin)" generated="2024-08-05T17:00:49.990295" rpa="false" schemaversion="5">
+<suite id="s1" name="Test" source="/Users/jaybabu/Downloads/Skote_Angular_v4.5.0/Admin/server/Test.robot">
+<test id="s1-t1" name="Find Vulnerabilities" line="24">
+<kw name="Scan Website" owner="PenTest">
+<msg time="2024-08-05T17:01:39.705472" level="INFO">Discovered 13 URLs on http://www.itsecgames.com/bugs.htm:
+
+1. http://www.itsecgames.com/index.htm
+2. http://www.itsecgames.com/download.htm
+3. http://www.itsecgames.com/training.htm
+4. http://itsecgames.blogspot.com/
+5. http://www.itsecgames.com/downloads/vulnerabilities.txt
+Testing URL: http://www.itsecgames.com/index.htm with payload: ' OR '1'='1
+Testing URL: http://www.itsecgames.com/index.htm with payload: ' OR '1'='1' --
+Testing URL: http://www.itsecgames.com/index.htm with payload: ' OR '1'='1' /*
+Testing URL: http://www.itsecgames.com/index.htm with payload: 1' OR '1' = '1
+Testing URL: http://www.itsecgames.com/index.htm with payload: 1' OR '1' = '1' --
+Testing URL: http://www.itsecgames.com/index.htm with payload: 1' OR '1' = '1' /*
+Full URL being requested: http://www.itsecgames.com/index.htm?id=1' OR '1' = '1' /*
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No SQL injection vulnerability detected on http://www.itsecgames.com/index.htm
+Testing URL: http://www.itsecgames.com/index.htm with payload: &lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://www.itsecgames.com/index.htm?input=&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload &lt;script&gt;alert('XSS')&lt;/script&gt; on http://www.itsecgames.com/index.htm
+Testing URL: http://www.itsecgames.com/index.htm with payload: '"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+Full URL being requested: http://www.itsecgames.com/index.htm?input='"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload '"&gt;&lt;img src='x' onerror='alert(1)'&gt; on http://www.itsecgames.com/index.htm
+Testing URL: http://www.itsecgames.com/index.htm with payload: &lt;svg/onload=alert(1)&gt;
+Full URL being requested: http://www.itsecgames.com/index.htm?input=&lt;svg/onload=alert(1)&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload &lt;svg/onload=alert(1)&gt; on http://www.itsecgames.com/index.htm
+Testing URL: http://www.itsecgames.com/index.htm with payload: "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://www.itsecgames.com/index.htm?input="/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt; on http://www.itsecgames.com/index.htm
+
+Vulnerabilities found on http://www.itsecgames.com/index.htm:
+
+Vulnerability: Insecure server configuration
+Attack Method: Exploiting insecure communication protocols
+Testing URL: http://www.itsecgames.com/download.htm with payload: ' OR '1'='1
+Testing URL: http://www.itsecgames.com/download.htm with payload: ' OR '1'='1' --
+Testing URL: http://www.itsecgames.com/download.htm with payload: ' OR '1'='1' /*
+Testing URL: http://www.itsecgames.com/download.htm with payload: 1' OR '1' = '1
+Testing URL: http://www.itsecgames.com/download.htm with payload: 1' OR '1' = '1' --
+Testing URL: http://www.itsecgames.com/download.htm with payload: 1' OR '1' = '1' /*
+Full URL being requested: http://www.itsecgames.com/download.htm?id=1' OR '1' = '1' /*
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No SQL injection vulnerability detected on http://www.itsecgames.com/download.htm
+Testing URL: http://www.itsecgames.com/download.htm with payload: &lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://www.itsecgames.com/download.htm?input=&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload &lt;script&gt;alert('XSS')&lt;/script&gt; on http://www.itsecgames.com/download.htm
+Testing URL: http://www.itsecgames.com/download.htm with payload: '"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+Full URL being requested: http://www.itsecgames.com/download.htm?input='"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload '"&gt;&lt;img src='x' onerror='alert(1)'&gt; on http://www.itsecgames.com/download.htm
+Testing URL: http://www.itsecgames.com/download.htm with payload: &lt;svg/onload=alert(1)&gt;
+Full URL being requested: http://www.itsecgames.com/download.htm?input=&lt;svg/onload=alert(1)&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload &lt;svg/onload=alert(1)&gt; on http://www.itsecgames.com/download.htm
+Testing URL: http://www.itsecgames.com/download.htm with payload: "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://www.itsecgames.com/download.htm?input="/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt; on http://www.itsecgames.com/download.htm
+
+Vulnerabilities found on http://www.itsecgames.com/download.htm:
+
+Vulnerability: Insecure server configuration
+Attack Method: Exploiting insecure communication protocols
+Testing URL: http://www.itsecgames.com/training.htm with payload: ' OR '1'='1
+Testing URL: http://www.itsecgames.com/training.htm with payload: ' OR '1'='1' --
+Testing URL: http://www.itsecgames.com/training.htm with payload: ' OR '1'='1' /*
+Testing URL: http://www.itsecgames.com/training.htm with payload: 1' OR '1' = '1
+Testing URL: http://www.itsecgames.com/training.htm with payload: 1' OR '1' = '1' --
+Testing URL: http://www.itsecgames.com/training.htm with payload: 1' OR '1' = '1' /*
+Full URL being requested: http://www.itsecgames.com/training.htm?id=1' OR '1' = '1' /*
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No SQL injection vulnerability detected on http://www.itsecgames.com/training.htm
+Testing URL: http://www.itsecgames.com/training.htm with payload: &lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://www.itsecgames.com/training.htm?input=&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload &lt;script&gt;alert('XSS')&lt;/script&gt; on http://www.itsecgames.com/training.htm
+Testing URL: http://www.itsecgames.com/training.htm with payload: '"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+Full URL being requested: http://www.itsecgames.com/training.htm?input='"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload '"&gt;&lt;img src='x' onerror='alert(1)'&gt; on http://www.itsecgames.com/training.htm
+Testing URL: http://www.itsecgames.com/training.htm with payload: &lt;svg/onload=alert(1)&gt;
+Full URL being requested: http://www.itsecgames.com/training.htm?input=&lt;svg/onload=alert(1)&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload &lt;svg/onload=alert(1)&gt; on http://www.itsecgames.com/training.htm
+Testing URL: http://www.itsecgames.com/training.htm with payload: "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://www.itsecgames.com/training.htm?input="/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+
+&lt;link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Architects+Daughter"&gt;
+&lt;link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" /&gt;
+&lt;link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" /&gt;
+
+&lt;!--&lt;script src="//html5shiv.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;--&gt;
+&lt;script src="js/html5.js"&gt;&lt;/script&gt;
+
+&lt;title&gt;bWAP
+No XSS vulnerability detected with payload "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt; on http://www.itsecgames.com/training.htm
+
+Vulnerabilities found on http://www.itsecgames.com/training.htm:
+
+Vulnerability: Insecure server configuration
+Attack Method: Exploiting insecure communication protocols
+Testing URL: http://itsecgames.blogspot.com/ with payload: ' OR '1'='1
+Testing URL: http://itsecgames.blogspot.com/ with payload: ' OR '1'='1' --
+Testing URL: http://itsecgames.blogspot.com/ with payload: ' OR '1'='1' /*
+Testing URL: http://itsecgames.blogspot.com/ with payload: 1' OR '1' = '1
+Testing URL: http://itsecgames.blogspot.com/ with payload: 1' OR '1' = '1' --
+Testing URL: http://itsecgames.blogspot.com/ with payload: 1' OR '1' = '1' /*
+Full URL being requested: http://itsecgames.blogspot.com/?id=1' OR '1' = '1' /*
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html class='v2' dir='ltr' lang='en'&gt;
+&lt;head&gt;
+&lt;link href='https://www.blogger.com/static/v1/widgets/3566091532-css_bundle_v2.css' rel='stylesheet' type='text/css'/&gt;
+&lt;meta content='width=1100' name='viewport'/&gt;
+&lt;meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/&gt;
+&lt;meta content='blogger' name='generator'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/favicon.ico' rel='icon' type='image/x-icon'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/' rel='canonical'/&gt;
+&lt;link rel="
+Possible SQL injection vulnerability detected on http://itsecgames.blogspot.com/
+Testing URL: http://itsecgames.blogspot.com/ with payload: &lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://itsecgames.blogspot.com/?input=&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html class='v2' dir='ltr' lang='en'&gt;
+&lt;head&gt;
+&lt;link href='https://www.blogger.com/static/v1/widgets/3566091532-css_bundle_v2.css' rel='stylesheet' type='text/css'/&gt;
+&lt;meta content='width=1100' name='viewport'/&gt;
+&lt;meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/&gt;
+&lt;meta content='blogger' name='generator'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/favicon.ico' rel='icon' type='image/x-icon'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/' rel='canonical'/&gt;
+&lt;link rel="
+No XSS vulnerability detected with payload &lt;script&gt;alert('XSS')&lt;/script&gt; on http://itsecgames.blogspot.com/
+Testing URL: http://itsecgames.blogspot.com/ with payload: '"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+Full URL being requested: http://itsecgames.blogspot.com/?input='"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html class='v2' dir='ltr' lang='en'&gt;
+&lt;head&gt;
+&lt;link href='https://www.blogger.com/static/v1/widgets/3566091532-css_bundle_v2.css' rel='stylesheet' type='text/css'/&gt;
+&lt;meta content='width=1100' name='viewport'/&gt;
+&lt;meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/&gt;
+&lt;meta content='blogger' name='generator'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/favicon.ico' rel='icon' type='image/x-icon'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/' rel='canonical'/&gt;
+&lt;link rel="
+No XSS vulnerability detected with payload '"&gt;&lt;img src='x' onerror='alert(1)'&gt; on http://itsecgames.blogspot.com/
+Testing URL: http://itsecgames.blogspot.com/ with payload: &lt;svg/onload=alert(1)&gt;
+Full URL being requested: http://itsecgames.blogspot.com/?input=&lt;svg/onload=alert(1)&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html class='v2' dir='ltr' lang='en'&gt;
+&lt;head&gt;
+&lt;link href='https://www.blogger.com/static/v1/widgets/3566091532-css_bundle_v2.css' rel='stylesheet' type='text/css'/&gt;
+&lt;meta content='width=1100' name='viewport'/&gt;
+&lt;meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/&gt;
+&lt;meta content='blogger' name='generator'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/favicon.ico' rel='icon' type='image/x-icon'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/' rel='canonical'/&gt;
+&lt;link rel="
+No XSS vulnerability detected with payload &lt;svg/onload=alert(1)&gt; on http://itsecgames.blogspot.com/
+Testing URL: http://itsecgames.blogspot.com/ with payload: "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://itsecgames.blogspot.com/?input="/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+&lt;!DOCTYPE html&gt;
+&lt;html class='v2' dir='ltr' lang='en'&gt;
+&lt;head&gt;
+&lt;link href='https://www.blogger.com/static/v1/widgets/3566091532-css_bundle_v2.css' rel='stylesheet' type='text/css'/&gt;
+&lt;meta content='width=1100' name='viewport'/&gt;
+&lt;meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/&gt;
+&lt;meta content='blogger' name='generator'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/favicon.ico' rel='icon' type='image/x-icon'/&gt;
+&lt;link href='http://itsecgames.blogspot.com/' rel='canonical'/&gt;
+&lt;link rel="
+No XSS vulnerability detected with payload "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt; on http://itsecgames.blogspot.com/
+
+Vulnerabilities found on http://itsecgames.blogspot.com/:
+
+Vulnerability: SQL injection vulnerability
+Attack Method: Injecting SQL code into input fields
+
+Vulnerability: Insecure server configuration
+Attack Method: Exploiting insecure communication protocols
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: ' OR '1'='1
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: ' OR '1'='1' --
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: ' OR '1'='1' /*
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: 1' OR '1' = '1
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: 1' OR '1' = '1' --
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: 1' OR '1' = '1' /*
+Full URL being requested: http://www.itsecgames.com/downloads/vulnerabilities.txt?id=1' OR '1' = '1' /*
+HTTP response status code: 200
+HTTP response content:
+
+---------------------------------------------
+bWAPP &amp; bee-box - Overview of vulnerabilities
+---------------------------------------------
+
+Author				: Malik Mesellem, @MME_IT
+Date				: 2/11/2014
+bWAPP version			: bWAPP v2.2
+bee-box version			: bee-box v1.6
+
+--------------
+A1 - Injection
+--------------
+HTML Injection - Reflected (GET)
+HTML Injection - Reflected (POST)
+HTML Injection - Reflected (Current URL)
+HTML Injection - Stored (Blog)
+iFrame Injection
+LDAP Injection (Search)
+Mail Header Inje
+No SQL injection vulnerability detected on http://www.itsecgames.com/downloads/vulnerabilities.txt
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: &lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://www.itsecgames.com/downloads/vulnerabilities.txt?input=&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+
+---------------------------------------------
+bWAPP &amp; bee-box - Overview of vulnerabilities
+---------------------------------------------
+
+Author				: Malik Mesellem, @MME_IT
+Date				: 2/11/2014
+bWAPP version			: bWAPP v2.2
+bee-box version			: bee-box v1.6
+
+--------------
+A1 - Injection
+--------------
+HTML Injection - Reflected (GET)
+HTML Injection - Reflected (POST)
+HTML Injection - Reflected (Current URL)
+HTML Injection - Stored (Blog)
+iFrame Injection
+LDAP Injection (Search)
+Mail Header Inje
+No XSS vulnerability detected with payload &lt;script&gt;alert('XSS')&lt;/script&gt; on http://www.itsecgames.com/downloads/vulnerabilities.txt
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: '"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+Full URL being requested: http://www.itsecgames.com/downloads/vulnerabilities.txt?input='"&gt;&lt;img src='x' onerror='alert(1)'&gt;
+HTTP response status code: 200
+HTTP response content:
+
+---------------------------------------------
+bWAPP &amp; bee-box - Overview of vulnerabilities
+---------------------------------------------
+
+Author				: Malik Mesellem, @MME_IT
+Date				: 2/11/2014
+bWAPP version			: bWAPP v2.2
+bee-box version			: bee-box v1.6
+
+--------------
+A1 - Injection
+--------------
+HTML Injection - Reflected (GET)
+HTML Injection - Reflected (POST)
+HTML Injection - Reflected (Current URL)
+HTML Injection - Stored (Blog)
+iFrame Injection
+LDAP Injection (Search)
+Mail Header Inje
+No XSS vulnerability detected with payload '"&gt;&lt;img src='x' onerror='alert(1)'&gt; on http://www.itsecgames.com/downloads/vulnerabilities.txt
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: &lt;svg/onload=alert(1)&gt;
+Full URL being requested: http://www.itsecgames.com/downloads/vulnerabilities.txt?input=&lt;svg/onload=alert(1)&gt;
+HTTP response status code: 200
+HTTP response content:
+
+---------------------------------------------
+bWAPP &amp; bee-box - Overview of vulnerabilities
+---------------------------------------------
+
+Author				: Malik Mesellem, @MME_IT
+Date				: 2/11/2014
+bWAPP version			: bWAPP v2.2
+bee-box version			: bee-box v1.6
+
+--------------
+A1 - Injection
+--------------
+HTML Injection - Reflected (GET)
+HTML Injection - Reflected (POST)
+HTML Injection - Reflected (Current URL)
+HTML Injection - Stored (Blog)
+iFrame Injection
+LDAP Injection (Search)
+Mail Header Inje
+No XSS vulnerability detected with payload &lt;svg/onload=alert(1)&gt; on http://www.itsecgames.com/downloads/vulnerabilities.txt
+Testing URL: http://www.itsecgames.com/downloads/vulnerabilities.txt with payload: "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+Full URL being requested: http://www.itsecgames.com/downloads/vulnerabilities.txt?input="/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt;
+HTTP response status code: 200
+HTTP response content:
+
+---------------------------------------------
+bWAPP &amp; bee-box - Overview of vulnerabilities
+---------------------------------------------
+
+Author				: Malik Mesellem, @MME_IT
+Date				: 2/11/2014
+bWAPP version			: bWAPP v2.2
+bee-box version			: bee-box v1.6
+
+--------------
+A1 - Injection
+--------------
+HTML Injection - Reflected (GET)
+HTML Injection - Reflected (POST)
+HTML Injection - Reflected (Current URL)
+HTML Injection - Stored (Blog)
+iFrame Injection
+LDAP Injection (Search)
+Mail Header Inje
+No XSS vulnerability detected with payload "/&gt;&lt;script&gt;alert('XSS')&lt;/script&gt; on http://www.itsecgames.com/downloads/vulnerabilities.txt
+
+Vulnerabilities found on http://www.itsecgames.com/downloads/vulnerabilities.txt:
+
+Vulnerability: Insecure server configuration
+Attack Method: Exploiting insecure communication protocols</msg>
+<msg time="2024-08-05T17:01:39.706228" level="INFO">${vulnerabilities} = {'http://www.itsecgames.com/index.htm': {'Insecure server configuration': 'Exploiting insecure communication protocols'}, 'http://www.itsecgames.com/download.htm': {'Insecure server configuration': 'E...</msg>
+<var>${vulnerabilities}</var>
+<arg>${URL}</arg>
+<status status="PASS" start="2024-08-05T17:00:58.239874" elapsed="41.466396"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2024-08-05T17:01:39.708079" level="INFO">{'http://www.itsecgames.com/index.htm': {'Insecure server configuration': 'Exploiting insecure communication protocols'}, 'http://www.itsecgames.com/download.htm': {'Insecure server configuration': 'Exploiting insecure communication protocols'}, 'http://www.itsecgames.com/training.htm': {'Insecure server configuration': 'Exploiting insecure communication protocols'}, 'http://itsecgames.blogspot.com/': {'SQL injection vulnerability': 'Injecting SQL code into input fields', 'Insecure server configuration': 'Exploiting insecure communication protocols'}, 'http://www.itsecgames.com/downloads/vulnerabilities.txt': {'Insecure server configuration': 'Exploiting insecure communication protocols'}}</msg>
+<arg>${vulnerabilities}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2024-08-05T17:01:39.707710" elapsed="0.000426"/>
+</kw>
+<kw name="Generate Html Report" owner="PenTest">
+<arg>${vulnerabilities}</arg>
+<status status="PASS" start="2024-08-05T17:01:39.708639" elapsed="0.002975"/>
+</kw>
+<status status="PASS" start="2024-08-05T17:00:58.238348" elapsed="41.473476"/>
+</test>
+<status status="PASS" start="2024-08-05T17:00:49.992327" elapsed="49.721172"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Test">Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

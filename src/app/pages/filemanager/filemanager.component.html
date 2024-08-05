@@ -56,7 +56,7 @@
                 </div>
                 <!-- filemanager-leftsidebar -->
 
-                <div class="w-100" style="height: 87vh">
+                <div class="w-100">
 
 
 
@@ -209,7 +209,8 @@
                                                                             <h5 class="font-size-14 text-truncate"><a href="javascript: void(0);" class="text-dark">
                                                                                 Vulnerability ID : {{data['Vulnerability ID']}}</a>
                                                                             </h5>
-                                                                            <p class="text-muted mb-0">Affected Spec: {{data['Affected Spec']}}</p>
+                                                                            <p class="text-muted mb-0">Asset: <b>{{data['Asset']}}</b></p>
+                                                                            <p class="text-muted mb-0">Affected Spec: <b>{{data['Affected Spec']}}</b></p>
                                                                             <br>
                                                                             <p> CVE </p>
                                                                             <div class="row file-content" style="max-height: 450px; max-width: 1024px;overflow-y: auto;overflow-x: auto;">
@@ -453,7 +454,7 @@
                                     </div>
 
                                     <div class="ms-2">
-                                        <p class="text-muted text-truncate mb-0">{{this.filteredStaticData.length + this.scaData.length}} </p>
+                                        <p class="text-muted text-truncate mb-0">{{this.staticdata.length + this.scaData.length}} </p>
                                     </div>
                                 </div>
                             </div>

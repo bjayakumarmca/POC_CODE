@@ -62,12 +62,12 @@ progressMessage = '';
     const messages = [
     'Scanning for vulnerabilities..',
     'Static Scan is in progress..', 
+    'Static Scan is in progress..', 
     'Analysing found vulnerabilities..',
     'Static Scan is Completed.. & Dynamic Scan started..', 
     'Dynamic Scan is in progress..',  
+    'Dynamic Scan is in progress..',  
     'Dynamic Scan is Completed.',
-    'Penetration testing execution started..', 
-    'Almost done with penetration testing..',
     'Execution completed..',
     'Documenting results and recommendations..', 
    ];
@@ -139,6 +139,7 @@ progressMessage = '';
           }
         });
         this.filteredStaticData = this.staticdata.filter(item => item.status === 'Open');
+        this.staticdata = this.staticdata.filter(item => item.status === 'Open');
         this.filteredScaData = this.scaData;
         this.isScanning = false;
       }
