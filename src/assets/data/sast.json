@@ -1,7 +1,7 @@
 [
     {
       "id":1,
-      "line_number": "6, 10",
+      "line_number": "6",
       "issue_type": "Buffer Overflow",
       "code_snippet": "gets(username);",
       "confidence" : [70],
